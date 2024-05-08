@@ -1,0 +1,20 @@
+.second-screen {
+    background-color: #EFE1EE; 
+    flex-direction : column;
+    align-items: center;
+    justify-content : center;
+    height : 200vh;
+    transition : background-color 0.3s ease;
+}
+
+
+.second-screen h2 {
+    font-size: 20px;
+    position: absolute;
+    color :black;
+    margin-top : 70px;
+    margin-left: 40px;
+    font-weight: bold;
+
+
+}

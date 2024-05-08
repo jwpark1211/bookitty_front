@@ -1,0 +1,35 @@
+.header {
+    display : flex;
+    justify-content : space-between;
+    align-items : center;
+    background-color: black;
+    padding : 10px 20px;
+}
+
+.logo-container {
+    width : 100px;
+}
+
+.button-container{
+    display : flex;
+}
+
+.logo {
+    width : 100%;
+    height : auto;
+    fill : white;
+}
+
+.login-button, .signup-button {
+    background-color: black;
+    color : white;
+    border : none;
+    padding : 8px 16px;
+    margin-left : 10px;
+    cursor : pointer;
+    text-decoration: none;
+}
+
+.login-button {
+    margin-right:10px;
+}

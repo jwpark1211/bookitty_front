@@ -1,0 +1,86 @@
+@font-face {
+    font-family: 'LOTTERIACHAB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.main-page {
+    display : flex;
+    flex-direction : column;
+    align-items: center;
+    justify-content : center;
+    height : 80vh;
+    background-color: black;
+}
+
+.main-page h1 {
+    font-family: 'LOTTERIACHAB';
+    text-align: center;
+    font-size: 60px;
+    border: none;
+    font-weight: normal;
+    margin-bottom: 20px;
+    color: white;
+    opacity: 0; /* 시작할 때 투명도를 0으로 설정 */
+    animation: fadeIn 2s forwards; /* fadeIn 애니메이션을 1초 동안 적용 */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* 시작 시 투명도 0 */
+    }
+    to {
+        opacity: 1; /* 종료 시 투명도 1 */
+    }
+}
+
+
+
+.search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width : 60%;
+    margin : 20px auto;
+}
+
+.search-input {
+    flex : 1;
+    height: 40px;
+    font-size: 18px;
+    padding: 10px;
+    padding-left : 50px;
+    margin : 0;
+    border: 2px solid #9400d3; 
+    outline: none;
+    transition: border-color 0.3s ease;
+    border-radius : 30px; 
+  }
+  
+.search-icon {
+    width : 30px;
+    height : 30px;
+    fill : #9400d3;
+    cursor : pointer;
+    position : absolute;
+    left : 10px;
+    top : 50%;
+    transform: translateY(-50%);
+}
+.search-input:focus {
+    border-color: #ff6ec7; 
+  }
+.about-slide { 
+    animation: about_slide 1s ease-in-out;
+}
+@keyframes about_slide { 
+    from {
+        opacity: 0;
+        transform: translateY(300px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}

@@ -1,0 +1,89 @@
+.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 98.4vh;
+    background-color: black;
+}
+
+.logo-container_1 {
+    width: 200px; 
+    display: flex;
+    align-items: flex-start; 
+    justify-content: center; 
+}
+
+.logo {
+    width: 100%;
+    height: 100%;
+}
+
+.login-text {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    color : white;
+}
+
+.email-input {
+    border: 2px solid #d300ff; 
+    border-radius: 30px;
+    padding: 8px;
+    margin-top: 20px;
+    width: 400px;
+    height : 35px;
+    outline: none;
+    font-size: 15px;
+}
+
+.email-input:focus {
+    border-color: #d300ff; 
+}
+
+.password-input01 {
+    border: 2px solid #d300ff; 
+    border-radius: 30px;
+    padding: 8px;
+    margin-top: 20px;
+    width: 400px;
+    height : 35px;
+    outline: none;
+    font-size: 15px;
+}
+.white {
+    color: white;
+}
+
+
+.password-input:focus{
+    border-color: #d300ff;
+}
+
+.login-button01 {
+    background-color: #d300ff;
+    color: white; 
+    border: none;
+    border-radius: 30px;
+    padding: 15px;
+    margin-top: 20px;
+    cursor: pointer;
+    outline: none;
+    width : 410px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.no-account{
+    color : white;
+}
+
+.no-account a {
+    color: #d300ff;
+    text-decoration: none; 
+}
+
+.no-account a:hover {
+    text-decoration: underline; 
+}
+

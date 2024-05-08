@@ -106,9 +106,9 @@
 }
 
 .label-text03 {
-    width: 80px; 
-    margin-bottom: 1px; 
+    width: 80px;  
     color : white;
+    align-items: center;
 }
 
 .password-input02 {
@@ -150,7 +150,9 @@
     color : white;
      border-color: #d300ff;
 }
+
 /*수정*/
+
 .signup-button01 {
     background-color: #d300ff;
     color: white; 

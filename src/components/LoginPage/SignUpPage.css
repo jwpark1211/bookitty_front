@@ -148,9 +148,9 @@
 .selected {
     background-color: #d300ff;
     color : white;
-    border-color: #d300ff;
+     border-color: #d300ff;
 }
-
+/*수정*/
 .signup-button01 {
     background-color: #d300ff;
     color: white; 

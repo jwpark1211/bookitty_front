@@ -22,11 +22,36 @@ const SignUpPage = ({ setIsSignIn }) => {
             return;
         }
 
+        try {
+            const response = await fetch('http://43.201.231.40:8080/members/new', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                    gender: gender,
+                    birthdate: birthdate,
+                    name: name
+                })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setIsSignIn(true);
+            } else {
+                setError(data.message);
+            }
+        } catch (error) {
+            console.error('Error signing up:', error);
+            setError("회원가입 중 오류가 발생했습니다.");
+        }
     };
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
-        setIsEmailValid(false); 
+        setIsEmailValid(false);
+        setError(""); // 이메일 변경 시 에러 초기화
     };
 
     const handlePasswordChange = (e) => {
@@ -46,9 +71,29 @@ const SignUpPage = ({ setIsSignIn }) => {
     };
 
     const handleCheckEmailAvailability = async () => {
-        
+        try {
+            const response = await fetch(`http://43.201.231.40:8080/members/email/${email}/unique`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email
+                })
+            });
+            const data = await response.json();
+            setIsEmailValid(data.isUnique);
+            if (!data.isUnique) {
+                setError("해당 이메일은 이미 사용 중입니다.");
+            } else {
+                setError(""); // 중복되지 않은 경우 에러 초기화
+            }
+        } catch (error) {
+            console.error('Error checking email availability:', error);
+            setError("이메일 중복 확인 중 오류가 발생했습니다.");
+        }
     };
-    
+
     return (
         <div className="sign-up-page">
             <div className="logo-container_2">
@@ -121,6 +166,6 @@ const SignUpPage = ({ setIsSignIn }) => {
             </div>
         </div>
     );
-}
+};
 
 export default SignUpPage;

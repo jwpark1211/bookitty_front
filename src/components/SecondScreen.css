@@ -1,20 +1,64 @@
-.second-screen {
-    background-color: #EFE1EE; 
-    flex-direction : column;
-    align-items: center;
-    justify-content : center;
-    height : 200vh;
-    transition : background-color 0.3s ease;
+@font-face {
+    font-family: 'LOTTERIACHAB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
 
+.second-screen {
+    background-color: #EFE1EE;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 430vh;
+    transition: background-color 0.3s ease;
+}
 
 .second-screen h2 {
     font-size: 20px;
     position: absolute;
-    color :black;
-    margin-top : 70px;
+    color: black;
+    margin-top: 70px;
     margin-left: 40px;
     font-weight: bold;
+}
 
+.bestseller-item, .new-book-item, .blog-choice-item, .economic-books-item, .literature-books-item, .science-books-item, .humanities-books-item, .improve-books-item {
+    position: relative;
+    display: flex; /* Flexbox를 사용하여 요소를 수평으로 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    margin-left: 40px;
+    margin-top: 140px;
+}
+.rank, .rank01, .rank02, .rank03 {
+    font-family: 'LOTTERIACHAB';
+    font-size: 30px;
+    margin-right: 10px; /* 순위와 사진 사이 간격 조정 */
+}
 
+.bestseller-image, .blog-choice-image, .new-book-image, .econmoic-books-image, .literature-books-image, .science-books-image, .humanities-books-image, .improve-books-image{
+    width: 100%;
+    height: auto;
+    max-width: 150px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 25px;
+    margin-left: 0px;
+    margin-right: 100px;
+}
+
+.book-info {
+    text-align: center;
+}
+
+.title, .title01, .title02, .title03, .title04 {
+    font-weight: bold;
+    font-size: 20px;
+    overflow-wrap: break-word;
+    margin-right: 200px; /* 길이가 긴 텍스트가 자동으로 줄 바꿈되도록 설정 */
+}
+
+.author, .author01, .author02, .author03, .author04 {
+    font-style: italic;
+    font-size: 15px;
 }

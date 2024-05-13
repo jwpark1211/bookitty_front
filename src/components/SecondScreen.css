@@ -30,6 +30,7 @@
     margin-left: 40px;
     margin-top: 140px;
 }
+
 .rank, .rank01, .rank02, .rank03 {
     font-family: 'LOTTERIACHAB';
     font-size: 30px;
@@ -44,7 +45,6 @@
     margin-bottom: 20px;
     border-radius: 25px;
     margin-left: 0px;
-    margin-right: 100px;
 }
 
 .book-info {
@@ -54,7 +54,6 @@
 .title, .title01, .title02, .title03, .title04 {
     font-weight: bold;
     font-size: 20px;
-    overflow-wrap: break-word;
     margin-right: 200px; /* 길이가 긴 텍스트가 자동으로 줄 바꿈되도록 설정 */
 }
 

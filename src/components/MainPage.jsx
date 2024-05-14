@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import './MainPage.css';
 import searchIcon from './search-alt-2-svgrepo-com.svg';
 import SearchResults from "./Search/SearchResults";
@@ -23,10 +24,14 @@ const MainPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isScrolled, setIsScrolled] = useState(false);
     const [searchResults, setSearchResults] = useState(null);
+    const navigate = useNavigate();
 
     const handleSearch = async (e) => {
         if (e.key === 'Enter') {
-            
+            // 검색어가 비어 있지 않을 때에만 검색 결과 페이지로 이동
+            if (searchTerm.trim() !== '') {
+                navigate(`/search?term=${searchTerm}`); // navigate 함수를 호출하여 경로 변경
+            }
         }
     };
 

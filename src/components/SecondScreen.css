@@ -40,7 +40,7 @@
 .bestseller-image, .blog-choice-image, .new-book-image, .econmoic-books-image, .literature-books-image, .science-books-image, .humanities-books-image, .improve-books-image{
     width: 100%;
     height: auto;
-    max-width: 150px;
+    max-width: 200px;
     margin-top: 10px;
     margin-bottom: 20px;
     border-radius: 25px;
@@ -55,7 +55,10 @@
 .title {
     font-weight: bold;
     font-size: 20px;
-    margin-right: 200px; /* 길이가 긴 텍스트가 자동으로 줄 바꿈되도록 설정 */
+    color : black;
+    text-decoration: none;
+    margin-right: 200px;
+     /* 길이가 긴 텍스트가 자동으로 줄 바꿈되도록 설정 */
 }
 
 .author{

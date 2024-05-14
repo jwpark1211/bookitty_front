@@ -159,7 +159,9 @@ const SecondScreen = () => {
                     <div className="rank">{bestseller.bestRank}</div>
                     <a href={`/book/${bestseller.id}`} className="title">{/* <-- 수정 */}
                         <img src={bestseller.cover} alt={bestseller.title} className="bestseller-image" />
+                        <div className="title">
                         <p>{bestseller.title}</p>
+                        </div>
                     </a>
                     <p className="author">{bestseller.author}</p>
                 </div>
@@ -172,7 +174,9 @@ const SecondScreen = () => {
         <div key={index} className="new-book-item">
             <a href={`/book/${newBooks.id}`} className="title">{/* <-- 수정 */}
                 <img src={newBooks.cover} alt={newBooks.title} className="new-book-image" />
+                <div className="title">
                 <p>{newBooks.title}</p>
+                </div>
             </a>
             <p className="author">{newBooks.author}</p>
         </div>
@@ -186,7 +190,9 @@ const SecondScreen = () => {
                         <div className="rank01">{blogChoice.bestRank}</div>
                         <a href={`/book/${blogChoice.id}`} className="title">
                         <img src={blogChoice.cover} alt={blogChoice.title} className="blog-choice-image" />
+                        <div className="title">
                         <p>{blogChoice.title}</p>
+                        </div>
                         </a>
                         <p className="author">{blogChoice.author}</p>
                     </div>
@@ -201,7 +207,9 @@ const SecondScreen = () => {
                         <div className="rank02">{economicBooks.bestRank}</div>
                         <a href={`/book/${economicBooks.id}`} className="title">
                         <img src={economicBooks.cover} alt={economicBooks.title} className="econmoic-books-image" />
+                        <div className="title">
                         <p>{economicBooks.title}</p>
+                        </div>
                         </a>
                         <p className="author">{economicBooks.author}</p>
                     </div>
@@ -216,7 +224,9 @@ const SecondScreen = () => {
                         <div className="rank03">{literature.bestRank}</div>
                         <a href={`/book/${literature.id}`} className="title">
                         <img src={literature.cover} alt={literature.title} className="literature-books-image" />
+                        <div className="title">
                         <p>{literature.title}</p>
+                        </div>
                         </a>
                         <p className="author">{literature.author}</p>
                     </div>
@@ -231,7 +241,9 @@ const SecondScreen = () => {
                         <div className="rank03">{science.bestRank}</div>
                         <a href={`/book/${science.id}`} className="title">
                         <img src={science.cover} alt={science.title} className="science-books-image" />
+                        <div className="title">
                         <p>{science.title}</p>
+                        </div>
                         </a>
                         <p className="author">{science.author}</p>
                     </div>
@@ -246,7 +258,9 @@ const SecondScreen = () => {
                         <div className="rank03">{humanities.bestRank}</div>
                         <a href={`/book/${humanities.id}`} className="title">
                         <img src={humanities.cover} alt={humanities.title} className="humanities-books-image" />
+                        <div className="title">
                         <p>{humanities.title}</p>
+                        </div>
                         </a>
                         <p className="author">{humanities.author}</p>
                     </div>
@@ -261,7 +275,9 @@ const SecondScreen = () => {
                         <div className="rank03">{improve.bestRank}</div>
                         <a href={`/book/${improve.id}`} className="title">
                         <img src={improve.cover} alt={improve.title} className="improve-books-image" />
+                        <div className="title">
                         <p>{improve.title}</p>
+                        </div>
                         </a>
                         <p className="author">{improve.author}</p>
                     </div>

@@ -153,89 +153,117 @@ const SecondScreen = () => {
     return (
         <div className="second-screen">
             <h2>⭐ 오늘의 베스트셀러 </h2>
-            <Slider {...settings}>
-                {bestsellers.map((bestseller, index) => (
-                    <div key={index} className="bestseller-item">
-                        <div className="rank">{bestseller.bestRank}</div>
+        <Slider {...settings}>
+            {bestsellers.map((bestseller, index) => (
+                <div key={index} className="bestseller-item">
+                    <div className="rank">{bestseller.bestRank}</div>
+                    <a href={`/book/${bestseller.id}`} className="title">{/* <-- 수정 */}
                         <img src={bestseller.cover} alt={bestseller.title} className="bestseller-image" />
-                        <p className="title">{bestseller.title}</p>
-                        <p className="author">{bestseller.author}</p>
-                    </div>
-                ))}
-            </Slider>
+                        <p>{bestseller.title}</p>
+                    </a>
+                    <p className="author">{bestseller.author}</p>
+                </div>
+            ))}
+        </Slider>
+
             <h2>🆕 신간 베스트셀러</h2>
-            <Slider {...settings}>
-                {newBooks.map((book, index) => (
-                    <div key={index} className="new-book-item">
-                        <img src={book.cover} alt={book.title} className="new-book-image" />
-                        <p className="title01">{book.title}</p>
-                        <p className="author01">{book.author}</p>
-                    </div>
-                ))}
-            </Slider>
+<Slider {...settings}>
+    {newBooks.map((newBooks, index) => (
+        <div key={index} className="new-book-item">
+            <a href={`/book/${newBooks.id}`} className="title">{/* <-- 수정 */}
+                <img src={newBooks.cover} alt={newBooks.title} className="new-book-image" />
+                <p>{newBooks.title}</p>
+            </a>
+            <p className="author">{newBooks.author}</p>
+        </div>
+    ))}
+</Slider>
+
             <h2>✔ Blog Choice 베스트셀러</h2>
             <Slider {...settings}>
                 {blogChoices.map((blogChoice, index) => (
                     <div key={index} className="blog-choice-item">
                         <div className="rank01">{blogChoice.bestRank}</div>
+                        <a href={`/book/${blogChoice.id}`} className="title">
                         <img src={blogChoice.cover} alt={blogChoice.title} className="blog-choice-image" />
-                        <p className="title02">{blogChoice.title}</p>
-                        <p className="author02">{blogChoice.author}</p>
+                        <p>{blogChoice.title}</p>
+                        </a>
+                        <p className="author">{blogChoice.author}</p>
                     </div>
                 ))}
             </Slider>
+
+
             <h2>📔경영경제 베스트셀러</h2>
             <Slider {...settings}>
                 {economicBooks.map((economicBooks, index) => (
                     <div key={index} className="economic-books-item">
                         <div className="rank02">{economicBooks.bestRank}</div>
+                        <a href={`/book/${economicBooks.id}`} className="title">
                         <img src={economicBooks.cover} alt={economicBooks.title} className="econmoic-books-image" />
-                        <p className="title03">{economicBooks.title}</p>
-                        <p className="author03">{economicBooks.author}</p>
+                        <p>{economicBooks.title}</p>
+                        </a>
+                        <p className="author">{economicBooks.author}</p>
                     </div>
                 ))}
             </Slider>
+
+
             <h2>📚 문학 베스트셀러</h2>
             <Slider {...settings}>
                 {literature.map((literature, index) => (
                     <div key={index} className="literature-books-item">
                         <div className="rank03">{literature.bestRank}</div>
+                        <a href={`/book/${literature.id}`} className="title">
                         <img src={literature.cover} alt={literature.title} className="literature-books-image" />
-                        <p className="title04">{literature.title}</p>
-                        <p className="author04">{literature.author}</p>
+                        <p>{literature.title}</p>
+                        </a>
+                        <p className="author">{literature.author}</p>
                     </div>
                 ))}
             </Slider>
+
+
             <h2>🧪 과학 베스트셀러</h2>
             <Slider {...settings}>
                 {science.map((science, index) => (
                     <div key={index} className="science-books-item">
                         <div className="rank03">{science.bestRank}</div>
+                        <a href={`/book/${science.id}`} className="title">
                         <img src={science.cover} alt={science.title} className="science-books-image" />
-                        <p className="title04">{science.title}</p>
-                        <p className="author04">{science.author}</p>
+                        <p>{science.title}</p>
+                        </a>
+                        <p className="author">{science.author}</p>
                     </div>
                 ))}
             </Slider>
+
+
             <h2>👥 인문 베스트셀러</h2>
             <Slider {...settings}>
                 {humanities.map((humanities, index) => (
                     <div key={index} className="humanities-books-item">
                         <div className="rank03">{humanities.bestRank}</div>
+                        <a href={`/book/${humanities.id}`} className="title">
                         <img src={humanities.cover} alt={humanities.title} className="humanities-books-image" />
-                        <p className="title04">{humanities.title}</p>
-                        <p className="author04">{humanities.author}</p>
+                        <p>{humanities.title}</p>
+                        </a>
+                        <p className="author">{humanities.author}</p>
                     </div>
                 ))}
             </Slider>
+
+
             <h2>💪 자기계발 베스트셀러</h2>
             <Slider {...settings}>
                 {improve.map((improve, index) => (
                     <div key={index} className="improve-books-item">
                         <div className="rank03">{improve.bestRank}</div>
+                        <a href={`/book/${improve.id}`} className="title">
                         <img src={improve.cover} alt={improve.title} className="improve-books-image" />
-                        <p className="title04">{improve.title}</p>
-                        <p className="author04">{improve.author}</p>
+                        <p>{improve.title}</p>
+                        </a>
+                        <p className="author">{improve.author}</p>
                     </div>
                 ))}
             </Slider>

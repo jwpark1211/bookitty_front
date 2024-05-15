@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import './SearchResults.css';
 import { useParams } from "react-router-dom";
 
 const SearchResults = () => {
@@ -23,7 +24,6 @@ const SearchResults = () => {
             })
             .catch(error => console.error('검색 결과를 가져오는 동안 오류가 발생했습니다:', error));
     }, [keyword]);
-
 
     return (
         <div className="search-results">

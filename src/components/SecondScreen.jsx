@@ -157,8 +157,13 @@ const SecondScreen = () => {
             {bestsellers.map((bestseller, index) => (
                 <div key={index} className="bestseller-item">
                     <div className="rank">{bestseller.bestRank}</div>
+<<<<<<< HEAD
                     <a href={`/book/${bestseller.id}`} className="title">{/* <-- 수정 */}
                         <img src={bestseller.cover} alt={bestseller.title} className="bestseller-image" />
+=======
+                    <img src={bestseller.cover} alt={bestseller.title} className="bestseller-image" />
+                    <a href={`/book/${bestseller.id}`} className="title">{/* <-- 수정 */}
+>>>>>>> master
                         <div className="title">
                         <p>{bestseller.title}</p>
                         </div>
@@ -172,8 +177,13 @@ const SecondScreen = () => {
 <Slider {...settings}>
     {newBooks.map((newBooks, index) => (
         <div key={index} className="new-book-item">
+<<<<<<< HEAD
             <a href={`/book/${newBooks.id}`} className="title">{/* <-- 수정 */}
                 <img src={newBooks.cover} alt={newBooks.title} className="new-book-image" />
+=======
+            <img src={newBooks.cover} alt={newBooks.title} className="new-book-image" />
+            <a href={`/book/${newBooks.id}`} className="title">{/* <-- 수정 */}
+>>>>>>> master
                 <div className="title">
                 <p>{newBooks.title}</p>
                 </div>
@@ -188,8 +198,13 @@ const SecondScreen = () => {
                 {blogChoices.map((blogChoice, index) => (
                     <div key={index} className="blog-choice-item">
                         <div className="rank01">{blogChoice.bestRank}</div>
+<<<<<<< HEAD
                         <a href={`/book/${blogChoice.id}`} className="title">
                         <img src={blogChoice.cover} alt={blogChoice.title} className="blog-choice-image" />
+=======
+                        <img src={blogChoice.cover} alt={blogChoice.title} className="blog-choice-image" />
+                        <a href={`/book/${blogChoice.id}`} className="title">
+>>>>>>> master
                         <div className="title">
                         <p>{blogChoice.title}</p>
                         </div>
@@ -205,8 +220,13 @@ const SecondScreen = () => {
                 {economicBooks.map((economicBooks, index) => (
                     <div key={index} className="economic-books-item">
                         <div className="rank02">{economicBooks.bestRank}</div>
+<<<<<<< HEAD
                         <a href={`/book/${economicBooks.id}`} className="title">
                         <img src={economicBooks.cover} alt={economicBooks.title} className="econmoic-books-image" />
+=======
+                        <img src={economicBooks.cover} alt={economicBooks.title} className="econmoic-books-image" />
+                        <a href={`/book/${economicBooks.id}`} className="title">
+>>>>>>> master
                         <div className="title">
                         <p>{economicBooks.title}</p>
                         </div>
@@ -222,8 +242,13 @@ const SecondScreen = () => {
                 {literature.map((literature, index) => (
                     <div key={index} className="literature-books-item">
                         <div className="rank03">{literature.bestRank}</div>
+<<<<<<< HEAD
                         <a href={`/book/${literature.id}`} className="title">
                         <img src={literature.cover} alt={literature.title} className="literature-books-image" />
+=======
+                        <img src={literature.cover} alt={literature.title} className="literature-books-image" />
+                        <a href={`/book/${literature.id}`} className="title">
+>>>>>>> master
                         <div className="title">
                         <p>{literature.title}</p>
                         </div>
@@ -239,8 +264,13 @@ const SecondScreen = () => {
                 {science.map((science, index) => (
                     <div key={index} className="science-books-item">
                         <div className="rank03">{science.bestRank}</div>
+<<<<<<< HEAD
                         <a href={`/book/${science.id}`} className="title">
                         <img src={science.cover} alt={science.title} className="science-books-image" />
+=======
+                        <img src={science.cover} alt={science.title} className="science-books-image" />
+                        <a href={`/book/${science.id}`} className="title">
+>>>>>>> master
                         <div className="title">
                         <p>{science.title}</p>
                         </div>
@@ -256,8 +286,13 @@ const SecondScreen = () => {
                 {humanities.map((humanities, index) => (
                     <div key={index} className="humanities-books-item">
                         <div className="rank03">{humanities.bestRank}</div>
+<<<<<<< HEAD
                         <a href={`/book/${humanities.id}`} className="title">
                         <img src={humanities.cover} alt={humanities.title} className="humanities-books-image" />
+=======
+                        <img src={humanities.cover} alt={humanities.title} className="humanities-books-image" />
+                        <a href={`/book/${humanities.id}`} className="title">
+>>>>>>> master
                         <div className="title">
                         <p>{humanities.title}</p>
                         </div>
@@ -273,8 +308,13 @@ const SecondScreen = () => {
                 {improve.map((improve, index) => (
                     <div key={index} className="improve-books-item">
                         <div className="rank03">{improve.bestRank}</div>
+<<<<<<< HEAD
                         <a href={`/book/${improve.id}`} className="title">
                         <img src={improve.cover} alt={improve.title} className="improve-books-image" />
+=======
+                        <img src={improve.cover} alt={improve.title} className="improve-books-image" />
+                        <a href={`/book/${improve.id}`} className="title">
+>>>>>>> master
                         <div className="title">
                         <p>{improve.title}</p>
                         </div>

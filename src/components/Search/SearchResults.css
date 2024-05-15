@@ -1,0 +1,10 @@
+.search-results {
+    background-color: black;
+    color: white; 
+    padding: 20px; 
+}
+
+.search-results h4 {
+    color: white;
+    margin-bottom: 10px; 
+}

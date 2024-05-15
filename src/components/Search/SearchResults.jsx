@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import './SearchResults.css';
 import { useParams } from "react-router-dom";
 
 const SearchResults = () => {
@@ -19,14 +20,10 @@ const SearchResults = () => {
                 return response.json();
             })
             .then(data => {
-                console.log('검색 결과 데이터:', data);
                 setSearchResults(data); 
             })
             .catch(error => console.error('검색 결과를 가져오는 동안 오류가 발생했습니다:', error));
     }, [keyword]);
-
-    console.log('검색어:', keyword);
-    console.log('검색 결과:', searchResults);
 
     return (
         <div className="search-results">

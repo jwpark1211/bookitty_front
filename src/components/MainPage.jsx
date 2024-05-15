@@ -23,7 +23,6 @@ const SearchBar = ({ value, onChange, onKeyPress }) => {
 const MainPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isScrolled, setIsScrolled] = useState(false);
-    const [searchResults, setSearchResults] = useState(null);
     const navigate = useNavigate();
 
     const handleSearch = async (e) => {
@@ -55,12 +54,6 @@ const MainPage = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyPress={handleSearch}
             />
-            {searchResults && searchResults.books.length > 0 && (
-                <SearchResults searchResults={searchResults} />
-            )}
-            {searchResults && searchResults.books.length === 0 && (
-                <p>검색 결과가 없습니다.</p>
-            )}
         </div>
     );
 }

@@ -1,171 +1,174 @@
-import React, { useState } from "react";
-import logo from './logo.svg';
-import './SignUpPage.css';
+.sign-up-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 98.4vh;
+    background-color: black;
+}
 
-const SignUpPage = ({ setIsSignIn }) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [name, setName] = useState("");
-    const [birthdate, setBirthdate] = useState("");
-    const [gender, setGender] = useState(null);
-    const [error, setError] = useState("");
-    const [isEmailValid, setIsEmailValid] = useState(false);
+.logo-container_2 {
+    position: relative;
+    width: 200px;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+}
 
-    const handleGenderClick = (selectedGender) => {
-        setGender(selectedGender);
-    };
+.input-container {
+    margin-top: 35px;
+    display: flex;
+    align-items: center;
+}
+.white {
+    color: white;
+}
 
-    const handleSignIn = async () => {
-        if (!isEmailValid) {
-            setError("이메일 중복 확인을 해주세요.");
-            return;
-        }
 
-        try {
-            const response = await fetch('http://43.201.231.40:8080/members/new', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: email,
-                    password: password,
-                    gender: gender,
-                    birthdate: birthdate,
-                    name: name
-                })
-            });
-            const data = await response.json();
-            if (response.ok) {
-                setIsSignIn(true);
-            } else {
-                setError(data.message);
-            }
-        } catch (error) {
-            console.error('Error signing up:', error);
-            setError("회원가입 중 오류가 발생했습니다.");
-        }
-    };
+.label-text {
+    width: 60px;
+    margin-bottom: 5px; 
+    color : white;
+}
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-        setIsEmailValid(false);
-        setError(""); // 이메일 변경 시 에러 초기화
-    };
+.email-input-container {
+    display: inline-flex;
+    align-items: center; 
+}
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
 
-    const handleConfirmPasswordChange = (e) => {
-        setConfirmPassword(e.target.value);
-    };
+.email-input01{
+    border: 2px solid #d300ff;
+    border-radius: 30px;
+    padding: 8px;
+    width: 270px; 
+    height: 30px;
+    outline: none;
+    font-size: 15px;
+    margin-right: 6px;
+}
 
-    const handleNameChange = (e) => {
-        setName(e.target.value);
-    };
+.name-input{
+    border: 2px solid #d300ff;
+    border-radius: 30px;
+    padding: 8px;
+    width: 280px; 
+    height: 30px;
+    outline: none;
+    font-size: 15px;
+    margin-right: 50px; /* 수정 */
+}
+.birthdate-input{
+    border: 2px solid #d300ff;
+    border-radius: 30px;
+    padding: 8px;
+    width: 300px; 
+    height: 30px;
+    outline: none;
+    font-size: 15px;
+    margin-right: 50px; /* 수정 */
+}
 
-    const handleBirthdateChange = (e) => {
-        setBirthdate(e.target.value);
-    };
+.password-input{
+    border: 2px solid #d300ff;
+    border-radius: 30px;
+    padding: 8px;
+    width: 280px; 
+    height: 30px;
+    outline: none;
+    font-size: 15px;
+    margin-right: 45px;
+}
 
-    const handleCheckEmailAvailability = async () => {
-        try {
-            const response = await fetch(`http://43.201.231.40:8080/members/email/${email}/unique`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: email
-                })
-            });
-            const data = await response.json();
-            setIsEmailValid(data.isUnique);
-            if (!data.isUnique) {
-                setError("해당 이메일은 이미 사용 중입니다.");
-            } else {
-                setError(""); // 중복되지 않은 경우 에러 초기화
-            }
-        } catch (error) {
-            console.error('Error checking email availability:', error);
-            setError("이메일 중복 확인 중 오류가 발생했습니다.");
-        }
-    };
+.email-input01:focus,
+.name-input:focus,
+.password-input:focus,
+.birthdate-input:focus {
+    border-color: #d300ff;
+}
 
-    return (
-        <div className="sign-up-page">
-            <div className="logo-container_2">
-                <img src={logo} alt="로고" className="logo" />
-                <div className="input-container">
-                    <label className="label-text">이메일</label>
-                    <div className="email-input-container">
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={handleEmailChange}
-                            placeholder="이메일을 입력"
-                            className="email-input01"
-                        />
-                    </div>
-                    <button onClick={handleCheckEmailAvailability} className="check-email-button">중복확인</button>
-                    <label className="label-text">이름</label>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={handleNameChange}
-                        placeholder="이름을 입력"
-                        className="name-input"
-                    />
-                </div>
-                <div className="input-container02">
-                    <label className="label-text02">비밀번호</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        placeholder="비밀번호 입력(영문자, 숫자 조합 16자 이내)"
-                        className="password-input"
-                    />
-                    <label className="label-text03">비밀번호 확인</label>
-                    <input
-                        type="password"
-                        value={confirmPassword}
-                        onChange={handleConfirmPasswordChange}
-                        placeholder="비밀번호 재입력"
-                        className="password-input02"
-                    />
-                </div>
-                <div className="input-container03">
-                    <label className="label-text02">생년월일</label>
-                    <input
-                        type="date"
-                        value={birthdate}
-                        onChange={handleBirthdateChange}
-                        className="birthdate-input"
-                    />
-                    <label className="label-text03">성별</label>
-                    <div className="gender-buttons">
-                        <button
-                            className={`gender-button ${gender === 'male' ? 'selected' : ''}`}
-                            onClick={() => handleGenderClick('male')}
-                        >
-                            남성
-                        </button>
-                        <button
-                            className={`gender-button ${gender === 'female' ? 'selected' : ''}`}
-                            onClick={() => handleGenderClick('female')}
-                        >
-                            여성
-                        </button>
-                    </div>
-                </div>
-                {error && <p className="error-message white">{error}</p>} {/* 에러 발생 시 글씨 색을 하얀색으로 */}
-                <button onClick={handleSignIn} className="signup-button01">회원가입</button>
-            </div>
-        </div>
-    );
-};
+.label-text02 {
+    width: 80px; 
+    margin-bottom: 10px; 
+    color: white;
+}
 
-export default SignUpPage;
+.input-container02 {
+    margin-top: 35px;
+    display: flex;
+    align-items: center; 
+}
+
+.input-container03 {
+    margin-top: 35px;
+    display: flex;
+    align-items: center; 
+}
+
+.label-text03 {
+    width: 80px; 
+    margin-bottom: 1px; 
+    color : white;
+}
+
+.password-input02 {
+    border: 2px solid #d300ff;
+    border-radius: 30px;
+    padding: 8px;
+    width: 300px; 
+    height: 30px;
+    outline: none;
+    font-size: 15px;
+    margin-right: 45px;
+}
+
+.gender-buttons {
+    display: flex;
+    margin-top: 10px;
+    margin-right : 50px;
+}
+
+.gender-button {
+    background-color: white;
+    border: 2px solid #d300ff;
+    border-radius: 30px;
+    color: rgb(68, 68, 68);
+    padding: 8px 16px;
+    margin-right: 15px;
+    cursor: pointer;
+    width : 140px;
+    height : 50px;
+    
+}
+
+.gender-button:last-child {
+    margin-right: 0;
+}
+
+.selected {
+    background-color: #d300ff;
+    color : white;
+    border-color: #d300ff;
+}
+
+.signup-button01 {
+    background-color: #d300ff;
+    color: white; 
+    border: none;
+    border-radius: 30px;
+    padding: 15px;
+    margin-top: 50px;
+    cursor: pointer;
+    outline: none;
+    width : 410px;
+    font-weight: bold;
+    font-size: 15px;
+}
+.check-email-button{
+    background-color: #d300ff;
+    color : white;
+    border-color: #d300ff;
+    border-radius: 20px;
+    margin-right: 20px;
+    width : 70px;
+}

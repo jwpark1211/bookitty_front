@@ -4,17 +4,17 @@ import logo from './logo.svg';
 import './SignUpPage.css';
 import axios from 'axios';
 
-const SignUpPage = ({ setIsSignIn }) => {
+const SignUpPage = ({ setIsSignIn, setName }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [name, setName] = useState("");
+    const [name, setNameInput] = useState(""); // setNameInput으로 변경
     const [birthdate, setBirthdate] = useState("");
     const [gender, setGender] = useState(null);
     const [error, setError] = useState("");
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [isCheckEmailFirst, setIsCheckEmailFirst] = useState(false);
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const handleGenderClick = (selectedGender) => {
         setGender(selectedGender);
@@ -45,6 +45,7 @@ const SignUpPage = ({ setIsSignIn }) => {
             }
             alert("회원가입이 완료되었습니다!");
             setIsSignIn(true); // 로그인 상태로 변경
+            setName(name); // 이름 상태 업데이트
             navigate('/login'); // 회원가입 성공 시 로그인 화면으로 이동
         } catch (error) {
             console.error("회원가입 오류:", error);
@@ -86,7 +87,7 @@ const SignUpPage = ({ setIsSignIn }) => {
     };
 
     const handleNameChange = (e) => {
-        setName(e.target.value);
+        setNameInput(e.target.value);
     };
 
     const handleBirthdateChange = (e) => {

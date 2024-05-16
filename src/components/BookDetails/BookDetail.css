@@ -1,0 +1,29 @@
+.book-detail-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .book-detail-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .book-detail-info {
+    margin-bottom: 15px;
+  }
+  
+  .book-detail-info p {
+    margin: 5px 0;
+  }
+  
+  .book-detail-description {
+    margin-top: 15px;
+  }
+  
+  .loading-text {
+    font-size: 18px;
+    font-style: italic;
+  }
+  

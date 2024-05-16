@@ -7,6 +7,7 @@ import SecondScreen from "./components/SecondScreen.jsx";
 import SignUpPage from "./components/LoginPage/SignUpPage.jsx";
 import LoginPage from "./components/LoginPage/LoginPage.jsx";
 import SearchResults from "./components/Search/SearchResults.jsx";
+import BookDetail from "./components/BookDetails/BookDetail.jsx"; // 새로운 컴포넌트 추가
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/search" element={<SearchResultsPage />} />
+          <Route path="/book/:id" element={<BookDetailPage />} /> 
         </Routes>
       </div>
     </Router>
@@ -40,5 +42,12 @@ const SearchResultsPage = () => (
     <SearchResults />
   </>
 );
+
+const BookDetailPage = () => {
+  <>
+  <Header />
+  <BookDetail />
+  </>
+}
 
 export default App;

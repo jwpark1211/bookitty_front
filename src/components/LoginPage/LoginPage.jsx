@@ -2,25 +2,29 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
 import './LoginPage.css';
-import axios from 'axios'; // axios를 import합니다.
+import axios from 'axios';
 
 const LoginPage = ({ setIsLoggedIn }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [isLoggedInMessage, setIsLoggedInMessage] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = async () => {
         try {
-            // axios를 사용하여 POST 요청을 보냅니다.
             const response = await axios.post('http://43.201.231.40:8080/members/login', {
                 email: email,
                 password: password
             });
-            console.log(response.data); // 응답 데이터를 확인하기 위해 로그로 출력합니다.
-            if (response.status === 200) { // HTTP 상태 코드로 응답을 확인합니다.
+            console.log(response.data);
+            if (response.status === 200) {
                 setIsLoggedIn(true);
-                navigate('/');
+                setIsLoggedInMessage(true);
+                setTimeout(() => {
+                    setIsLoggedInMessage(false);
+                    navigate('/');
+                }, 3000);
             } else {
                 setError("로그인에 실패했습니다.");
             }
@@ -59,6 +63,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
                 className="password-input01"
             />
             {error && <p className="error-message white">{error}</p>}
+            {isLoggedInMessage && <p className="success-message white">로그인 성공!</p>}
             <button onClick={handleLogin} className="login-button01">로그인</button>
             <p className="no-account">계정이 없으신가요? <span>&nbsp;</span><a href="/signup">회원가입</a></p>
         </div>
@@ -66,19 +71,3 @@ const LoginPage = ({ setIsLoggedIn }) => {
 }
 
 export default LoginPage;
-
-
-
-
-/*import axios from 'axios';
-
-let body = {
-    id : userId,
-    password : userPassword
-};
-
-axios.post("http://43.201.231.40:8080/members/login", body)    
-    .then((res) => {
-        console.log(res.data)
-    })
-    */

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
 import './SignUpPage.css';
 import axios from 'axios';
@@ -13,6 +14,7 @@ const SignUpPage = ({ setIsSignIn }) => {
     const [error, setError] = useState("");
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [isCheckEmailFirst, setIsCheckEmailFirst] = useState(false);
+    const navigate = useNavigate(); 
 
     const handleGenderClick = (selectedGender) => {
         setGender(selectedGender);
@@ -22,7 +24,13 @@ const SignUpPage = ({ setIsSignIn }) => {
         if (!isCheckEmailFirst || !isEmailValid || password !== confirmPassword) {
             return;
         }
-
+        console.log({
+            email,
+            password,
+            name,
+            birthdate,
+            gender
+        });
         try {
             const response = await axios.post("http://43.201.231.40:8080/members/new", {
                 email,
@@ -31,14 +39,15 @@ const SignUpPage = ({ setIsSignIn }) => {
                 birthdate,
                 gender
             });
-            if (!response.data.success) {
+            console.log(response.data)
+            if (!response.data.data.id) {
                 throw new Error('회원가입에 실패했습니다.');
             }
             alert("회원가입이 완료되었습니다!");
             setIsSignIn(true); // 로그인 상태로 변경
+            navigate('/login'); // 회원가입 성공 시 로그인 화면으로 이동
         } catch (error) {
             console.error("회원가입 오류:", error);
-            setError("회원가입에 실패했습니다.");
         }
     };
 
@@ -63,13 +72,14 @@ const SignUpPage = ({ setIsSignIn }) => {
         const newPassword = e.target.value;
         setPassword(newPassword);
     
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,16}$/; 
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         if (!passwordRegex.test(newPassword)) {
-            setError("비밀번호는 영문자와 숫자의 조합이며 16자 이내이어야 합니다.");
+            setError("비밀번호는 대소문자와 특수기호를 포함하여 8자 이상이어야 합니다.");
         } else {
             setError(""); 
         }
     };
+    
 
     const handleConfirmPasswordChange = (e) => {
         setConfirmPassword(e.target.value);
@@ -85,14 +95,14 @@ const SignUpPage = ({ setIsSignIn }) => {
 
     const handleCheckEmailAvailability = async () => {
         try {
-            const response = await axios.post(`http://43.201.231.40:8080/members/email/${email}/unique`, {
+            const response = await axios.get(`http://43.201.231.40:8080/members/email/${email}/unique`, {
                 email,
             });
             const data = response.data;
-            if (data.true) {
+            if (data.data.unique) {
                 setIsEmailValid(true);
                 setIsCheckEmailFirst(true);
-                setError("");
+                setError("사용 가능한 이메일입니다.");
             } else {
                 setIsEmailValid(false);
                 setError("이미 등록된 이메일입니다.");
@@ -134,7 +144,7 @@ const SignUpPage = ({ setIsSignIn }) => {
                         type="password"
                         value={password}
                         onChange={handlePasswordChange}
-                        placeholder="비밀번호 입력(영문자, 숫자 조합 16자 이내)"
+                        placeholder="비밀번호 입력(영문자, 숫자, 특수문자 조합 최소 8문자 이내)"
                         className="password-input"
                     />
                     <label className="label-text03">비밀번호 확인</label>
@@ -157,14 +167,14 @@ const SignUpPage = ({ setIsSignIn }) => {
                     <label className="label-text03">성별</label>
                     <div className="gender-buttons">
                         <button
-                            className={`gender-button ${gender === 'male' ? 'selected' : ''}`}
-                            onClick={() => handleGenderClick('male')}
+                            className={`gender-button ${gender === 'MALE' ? 'selected' : ''}`}
+                            onClick={() => handleGenderClick('MALE')}
                         >
                             남성
                         </button>
                         <button
-                            className={`gender-button ${gender === 'female' ? 'selected' : ''}`}
-                            onClick={() => handleGenderClick('female')}
+                            className={`gender-button ${gender === 'FEMALE' ? 'selected' : ''}`}
+                            onClick={() => handleGenderClick('FEMALE')}
                         >
                             여성
                         </button>
@@ -178,4 +188,3 @@ const SignUpPage = ({ setIsSignIn }) => {
 }
 
 export default SignUpPage;
-

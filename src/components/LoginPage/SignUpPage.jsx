@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import logo from './logo.svg';
 import './SignUpPage.css';
+import axios from 'axios';
 
 const SignUpPage = ({ setIsSignIn }) => {
     const [email, setEmail] = useState("");
@@ -11,26 +12,63 @@ const SignUpPage = ({ setIsSignIn }) => {
     const [gender, setGender] = useState(null);
     const [error, setError] = useState("");
     const [isEmailValid, setIsEmailValid] = useState(false);
+    const [isCheckEmailFirst, setIsCheckEmailFirst] = useState(false);
 
     const handleGenderClick = (selectedGender) => {
         setGender(selectedGender);
     };
 
-    const handleSignIn = async () => {
-        if (!isEmailValid) {
-            setError("이메일 중복 확인을 해주세요.");
+    const handleSignUp = async () => {
+        if (!isCheckEmailFirst || !isEmailValid || password !== confirmPassword) {
             return;
         }
 
+        try {
+            const response = await axios.post("http://43.201.231.40:8080/members/new", {
+                email,
+                password,
+                name,
+                birthdate,
+                gender
+            });
+            if (!response.data.success) {
+                throw new Error('회원가입에 실패했습니다.');
+            }
+            alert("회원가입이 완료되었습니다!");
+            setIsSignIn(true); // 로그인 상태로 변경
+        } catch (error) {
+            console.error("회원가입 오류:", error);
+            setError("회원가입에 실패했습니다.");
+        }
     };
 
     const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-        setIsEmailValid(false); 
+        const newEmail = e.target.value;
+        setEmail(newEmail);
+    
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (emailRegex.test(newEmail)) {
+            setIsEmailValid(true);
+            setIsCheckEmailFirst(false);
+            setError(""); 
+        } else {
+            setIsEmailValid(false);
+            setIsCheckEmailFirst(false);
+            setError("올바른 이메일 형식이 아닙니다."); 
+        }
     };
+    
 
     const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
+        const newPassword = e.target.value;
+        setPassword(newPassword);
+    
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,16}$/; 
+        if (!passwordRegex.test(newPassword)) {
+            setError("비밀번호는 영문자와 숫자의 조합이며 16자 이내이어야 합니다.");
+        } else {
+            setError(""); 
+        }
     };
 
     const handleConfirmPasswordChange = (e) => {
@@ -46,7 +84,23 @@ const SignUpPage = ({ setIsSignIn }) => {
     };
 
     const handleCheckEmailAvailability = async () => {
-        
+        try {
+            const response = await axios.post(`http://43.201.231.40:8080/members/email/${email}/unique`, {
+                email,
+            });
+            const data = response.data;
+            if (data.true) {
+                setIsEmailValid(true);
+                setIsCheckEmailFirst(true);
+                setError("");
+            } else {
+                setIsEmailValid(false);
+                setError("이미 등록된 이메일입니다.");
+            }
+        } catch (error) {
+            console.error('Error checking email availability:', error);
+            setError("이메일 중복 확인 중 오류가 발생했습니다.");
+        }
     };
     
     return (
@@ -117,10 +171,11 @@ const SignUpPage = ({ setIsSignIn }) => {
                     </div>
                 </div>
                 {error && <p className="error-message white">{error}</p>} {/* 에러 발생 시 글씨 색을 하얀색으로 */}
-                <button onClick={handleSignIn} className="signup-button01">회원가입</button>
+                <button onClick={handleSignUp} className="signup-button01">회원가입</button>
             </div>
         </div>
     );
 }
 
 export default SignUpPage;
+

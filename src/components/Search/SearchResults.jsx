@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './SearchResults.css';
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const SearchResults = () => {
     const [searchResults, setSearchResults] = useState([]);
@@ -30,7 +30,7 @@ const SearchResults = () => {
 
     return (
         <div className="search-results">
-            <h4>검색 결과</h4>
+            <h4>"{searchParams.get("term")}"에 대한 검색 결과</h4>
             <div className="book-container">
                 {searchResults && searchResults.length > 0 ? (
                     searchResults.map((result, index) => (

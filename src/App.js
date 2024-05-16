@@ -50,6 +50,6 @@ const BookDetailPage = () => {
   <Header />
   <BookDetail />
   </>
-}
+};
 
 export default App;

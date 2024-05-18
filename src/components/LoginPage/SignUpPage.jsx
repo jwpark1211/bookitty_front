@@ -102,7 +102,7 @@ const SignUpPage = ({ setIsSignIn }) => {
             if (data.data.unique) {
                 setIsEmailValid(true);
                 setIsCheckEmailFirst(true);
-                setError("사용 가능한 이메일입니다.");
+                setError(<span className = "error-message white">사용 가능한 이메일입니다. </span>);
             } else {
                 setIsEmailValid(false);
                 setError("이미 등록된 이메일입니다.");

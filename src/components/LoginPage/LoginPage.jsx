@@ -30,10 +30,9 @@ const LoginPage = ({ setIsLoggedIn }) => {
             }
         } catch (error) {
             console.error('Error logging in:', error);
-            setError(<span className="error-message white">로그인 중 오류가 발생했습니다.</span>);
+            setError("로그인 중 오류가 발생했습니다.");
         }
     };
-    
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);

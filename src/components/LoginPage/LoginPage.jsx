@@ -8,6 +8,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [isLoggedInMessage, setIsLoggedInMessage] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = async () => {
@@ -18,16 +19,18 @@ const LoginPage = ({ setIsLoggedIn }) => {
             });
             console.log(response.data);
             if (response.status === 200) {
-                const nickname = response.data.nickname;
-                localStorage.setItem('nickname', nickname);
                 setIsLoggedIn(true);
-                navigate('/');
+                setIsLoggedInMessage(true);
+                setTimeout(() => {
+                    setIsLoggedInMessage(false);
+                    navigate('/');
+                }, 3000);
             } else {
                 setError("로그인에 실패했습니다.");
             }
         } catch (error) {
             console.error('Error logging in:', error);
-            setError("로그인 중 오류가 발생했습니다.");
+            setError(<span className="error-message white">로그인 중 오류가 발생했습니다.</span>);
         }
     };
     
@@ -61,6 +64,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
                 className="password-input01"
             />
             {error && <p className="error-message white">{error}</p>}
+            {isLoggedInMessage && <p className="success-message white">로그인 성공!</p>}
             <button onClick={handleLogin} className="login-button01">로그인</button>
             <p className="no-account">계정이 없으신가요? <span>&nbsp;</span><a href="/signup">회원가입</a></p>
         </div>

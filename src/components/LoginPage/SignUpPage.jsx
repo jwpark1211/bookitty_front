@@ -4,17 +4,17 @@ import logo from './logo.svg';
 import './SignUpPage.css';
 import axios from 'axios';
 
-const SignUpPage = ({ setIsSignIn, setName }) => {
+const SignUpPage = ({ setIsSignIn }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [name, setNameInput] = useState(""); // setNameInput으로 변경
+    const [name, setName] = useState("");
     const [birthdate, setBirthdate] = useState("");
     const [gender, setGender] = useState(null);
     const [error, setError] = useState("");
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [isCheckEmailFirst, setIsCheckEmailFirst] = useState(false);
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
 
     const handleGenderClick = (selectedGender) => {
         setGender(selectedGender);
@@ -44,9 +44,8 @@ const SignUpPage = ({ setIsSignIn, setName }) => {
                 throw new Error('회원가입에 실패했습니다.');
             }
             alert("회원가입이 완료되었습니다!");
-            setIsSignIn(true); 
-            setName(name); 
-            navigate('/login'); 
+            setIsSignIn(true); // 로그인 상태로 변경
+            navigate('/login'); // 회원가입 성공 시 로그인 화면으로 이동
         } catch (error) {
             console.error("회원가입 오류:", error);
         }
@@ -87,7 +86,7 @@ const SignUpPage = ({ setIsSignIn, setName }) => {
     };
 
     const handleNameChange = (e) => {
-        setNameInput(e.target.value);
+        setName(e.target.value);
     };
 
     const handleBirthdateChange = (e) => {
@@ -181,7 +180,7 @@ const SignUpPage = ({ setIsSignIn, setName }) => {
                         </button>
                     </div>
                 </div>
-                {error && <p className="error-message">{error}</p>} 
+                {error && <p className="error-message white">{error}</p>} 
                 <button onClick={handleSignUp} className="signup-button01">회원가입</button>
             </div>
         </div>

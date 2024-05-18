@@ -1,13 +1,15 @@
 import React from 'react';
 import logo from './logo.svg';
 import './header.css';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
         <header className='header'>
             <div className="logo-container">
-                <img src={logo} alt="로고" className="logo" />
+                <Link to="/" className="logo-link">
+                    <img src={logo} alt="로고" className="logo" />
+                </Link>
             </div>
             <div className="button-container">
                 <Link to="/login" className="login-button">로그인</Link>

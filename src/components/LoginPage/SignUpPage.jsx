@@ -181,7 +181,7 @@ const SignUpPage = ({ setIsSignIn, setName }) => {
                         </button>
                     </div>
                 </div>
-                {error && <p className="error-message white">{error}</p>} {/* 에러 발생 시 글씨 색을 하얀색으로 */}
+                {error && <p className="error-message">{error}</p>} 
                 <button onClick={handleSignUp} className="signup-button01">회원가입</button>
             </div>
         </div>

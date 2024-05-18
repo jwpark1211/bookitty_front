@@ -7,7 +7,9 @@ const Header02 = ({ isSignedIn, name }) => {
   return (
     <header className='header02'>
       <div className="logo-container">
-        <img src={logo} alt="로고" className="logo" />
+        <Link to="/" className="logo-link">
+          <img src={logo} alt="로고" className="logo" />
+        </Link>
       </div>
       <div className="user-container">
         {isSignedIn && (

@@ -18,8 +18,8 @@ const LoginPage = ({ setIsLoggedIn }) => {
             });
             console.log(response.data);
             if (response.status === 200) {
-                const nickname = response.data.nickname; // 응답 데이터에서 닉네임을 가져옵니다.
-                localStorage.setItem('nickname', nickname); // 닉네임을 로컬 스토리지에 저장합니다.
+                const nickname = response.data.nickname;
+                localStorage.setItem('nickname', nickname);
                 setIsLoggedIn(true);
                 navigate('/');
             } else {

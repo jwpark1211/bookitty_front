@@ -30,6 +30,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
             setError("로그인 중 오류가 발생했습니다.");
         }
     };
+    
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);

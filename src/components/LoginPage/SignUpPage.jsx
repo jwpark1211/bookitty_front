@@ -44,9 +44,9 @@ const SignUpPage = ({ setIsSignIn, setName }) => {
                 throw new Error('회원가입에 실패했습니다.');
             }
             alert("회원가입이 완료되었습니다!");
-            setIsSignIn(true); // 로그인 상태로 변경
-            setName(name); // 이름 상태 업데이트
-            navigate('/login'); // 회원가입 성공 시 로그인 화면으로 이동
+            setIsSignIn(true); 
+            setName(name); 
+            navigate('/login'); 
         } catch (error) {
             console.error("회원가입 오류:", error);
         }

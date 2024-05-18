@@ -1,16 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header02 from './components/Header/header02.jsx';
 import Header from './components/Header/header.jsx';
 import MainPage from './components/MainPage.jsx';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SecondScreen from "./components/SecondScreen.jsx";
 import SignUpPage from "./components/LoginPage/SignUpPage.jsx";
 import LoginPage from "./components/LoginPage/LoginPage.jsx";
 import SearchResults from "./components/Search/SearchResults.jsx";
 import BookDetail from "./components/BookDetails/BookDetail.jsx";
+import MyPage from "./components/MyPage/MyPage.jsx";
 
 const App = () => {
-  const [isSignedIn, setIsSignedIn] = useState(false); 
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    const storedIsSignedIn = localStorage.getItem('isSignedIn');
+    const storedName = localStorage.getItem('name');
+    if (storedIsSignedIn && storedName) {
+      setIsSignedIn(true);
+      setName(storedName);
+    }
+  }, []);
 
   return (
     <Router>
@@ -18,12 +30,18 @@ const App = () => {
         <Helmet>
           <title>북키티</title>
         </Helmet>
+        {isSignedIn ? (
+          <Header02 isSignedIn={isSignedIn} name={name} />
+        ) : (
+          <Header />
+        )}
         <Routes>
           <Route path="/" element={<MainPageWithSecondScreen />} />
           <Route path="/login" element={<LoginPage setIsLoggedIn={setIsSignedIn} />} />
-          <Route path="/signup" element={<SignUpPage setIsSignIn={setIsSignedIn} />} /> {/* setIsSignIn 함수 전달 */}
+          <Route path="/signup" element={<SignUpPage setIsSignIn={setIsSignedIn} />} />
           <Route path="/search" element={<SearchResultsPage />} />
-          <Route path="/book/:id" element={<BookDetailPage />} /> 
+          <Route path="/book/:id" element={<BookDetailPage />} />
+          <Route path="/mypage" element={<MyPage isSignedIn={isSignedIn} name={name} />} />
         </Routes>
       </div>
     </Router>
@@ -32,7 +50,6 @@ const App = () => {
 
 const MainPageWithSecondScreen = () => (
   <>
-    <Header />
     <MainPage />
     <SecondScreen />
   </>
@@ -40,16 +57,15 @@ const MainPageWithSecondScreen = () => (
 
 const SearchResultsPage = () => (
   <>
-    <Header />
     <SearchResults />
   </>
 );
 
-const BookDetailPage = () => {
+const BookDetailPage = () => (
   <>
-  <Header />
-  <BookDetail />
+    <BookDetail />
   </>
-};
+);
+
 
 export default App;

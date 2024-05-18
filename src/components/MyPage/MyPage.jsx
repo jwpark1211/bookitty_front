@@ -70,8 +70,8 @@ const MyPage = ({ isSignedIn, email, name }) => {
           )}
         </div>
         <div className="user-info">
+        <p className="name">{name} 님 </p>
           <p className="email">{email}</p>
-          <p className="name">{name}</p>
         </div>
       </div>
       <div className="profile-edit-section">

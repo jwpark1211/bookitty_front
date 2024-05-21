@@ -36,7 +36,7 @@ const SearchResults = () => {
                     searchResults.map((result, index) => (
                         <div key={index} className="book-item">
                             <img src={result.cover} alt={result.title} className="book-cover" />
-                            <a href={`/book/${result.id}`} className="book-link">
+                            <a href={`/book/${result.isbn13}`} className="book-link">
                                 <div className="book-info">
                                     <h3 className="book-title">{result.title}</h3>
                                     <p className="book-author">{result.author}</p>

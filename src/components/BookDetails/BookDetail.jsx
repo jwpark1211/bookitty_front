@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import './BookDetail.css'; // Import the CSS file
 
 const BookDetail = () => {
     const { isbn } = useParams();
     const [book, setBook] = useState(null);
 
     useEffect(() => {
+        console.log(isbn);
         const apiUrl = `http://43.201.231.40:8080/open/search/book/${isbn}`;
         console.log('요청 보낸 URL:', apiUrl);
 
@@ -40,8 +42,18 @@ const BookDetail = () => {
     console.log('책 정보:', book);
 
     return (
-        <div>
-            <h1>{book.title}</h1>
+        <div className="book-detail">
+            <div className="book-image">
+                {book.cover && <img src={book.cover} alt={book.title} />}
+            </div>
+            <div className="book-info">
+                <h1 className="book-title01">{book.title}</h1>
+                <h2 className="book-author01">{book.author}</h2>
+                <h3 className="book-pubDate">{book.pubDate}</h3>
+                <h4 className="book-description">{book.description}</h4>
+                <h5 className="book-price">정가 {book.priceStandard}원</h5>
+                <a href={book.link} className="book-link" target="_blank" rel="noopener noreferrer">알라딘에서 보기</a>
+            </div>
         </div>
     );
 };

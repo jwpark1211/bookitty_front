@@ -40,7 +40,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage setIsLoggedIn={setIsSignedIn} />} />
           <Route path="/signup" element={<SignUpPage setIsSignIn={setIsSignedIn} />} />
           <Route path="/search" element={<SearchResultsPage />} />
-          <Route path="/book/:id" element={<BookDetailPage />} />
+          <Route path="/book/:isbn" element={<BookDetailPage />} />
           <Route path="/mypage" element={<MyPage isSignedIn={isSignedIn} name={name} />} />
         </Routes>
       </div>

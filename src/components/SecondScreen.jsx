@@ -155,18 +155,21 @@ const SecondScreen = () => {
         <div className="second-screen">
             <h2>⭐ 오늘의 베스트셀러 </h2>
         <Slider {...settings}>
-        {bestsellers.map((bestseller, index) => (
-                <div key={index} className="bestseller-item">
-                    <div className="rank">{bestseller.bestRank}</div>
-                    <img src={bestseller.cover} alt={bestseller.title} className="bestseller-image" />
-                    <Link to={`/book/${bestseller.id}`} className="title">
-                        <div className="title">
-                            <p>{bestseller.title}</p>
-                        </div>
-                    </Link>
-                    <p className="author">{bestseller.author}</p>
+        {bestsellers.map((bestseller, index) => {
+
+            return ( <div key={index} className="bestseller-item">
+            <div className="rank">{bestseller.bestRank}</div>
+            <img src={bestseller.cover} alt={bestseller.title} className="bestseller-image" />
+            <Link to={`/book/${bestseller.isbn13}`} className="title">
+                <div className="title">
+                    <p>{bestseller.title}</p>
                 </div>
-            ))}
+            </Link>
+            <p className="author">{bestseller.author}</p>
+        </div>)
+        }
+               
+            )}
         </Slider>
 
             <h2>🆕 신간 베스트셀러</h2>
@@ -174,7 +177,7 @@ const SecondScreen = () => {
     {newBooks.map((newBooks, index) => (
         <div key={index} className="new-book-item">
             <img src={newBooks.cover} alt={newBooks.title} className="new-book-image" />
-            <a href={`/book/${newBooks.id}`} className="title">{/* <-- 수정 */}
+            <a href={`/book/${newBooks.isbn13}`} className="title">{/* <-- 수정 */}
                 <div className="title">
                 <p>{newBooks.title}</p>
                 </div>
@@ -190,7 +193,7 @@ const SecondScreen = () => {
                     <div key={index} className="blog-choice-item">
                         <div className="rank01">{blogChoice.bestRank}</div>
                         <img src={blogChoice.cover} alt={blogChoice.title} className="blog-choice-image" />
-                        <a href={`/book/${blogChoice.id}`} className="title">
+                        <a href={`/book/${blogChoice.isbn13}`} className="title">
                         <div className="title">
                         <p>{blogChoice.title}</p>
                         </div>
@@ -207,7 +210,7 @@ const SecondScreen = () => {
                     <div key={index} className="economic-books-item">
                         <div className="rank02">{economicBooks.bestRank}</div>
                         <img src={economicBooks.cover} alt={economicBooks.title} className="econmoic-books-image" />
-                        <a href={`/book/${economicBooks.id}`} className="title">
+                        <a href={`/book/${economicBooks.isbn13}`} className="title">
                         <div className="title">
                         <p>{economicBooks.title}</p>
                         </div>
@@ -224,7 +227,7 @@ const SecondScreen = () => {
                     <div key={index} className="literature-books-item">
                         <div className="rank03">{literature.bestRank}</div>
                         <img src={literature.cover} alt={literature.title} className="literature-books-image" />
-                        <a href={`/book/${literature.id}`} className="title">
+                        <a href={`/book/${literature.isbn13}`} className="title">
                         <div className="title">
                         <p>{literature.title}</p>
                         </div>
@@ -241,7 +244,7 @@ const SecondScreen = () => {
                     <div key={index} className="science-books-item">
                         <div className="rank03">{science.bestRank}</div>
                         <img src={science.cover} alt={science.title} className="science-books-image" />
-                        <a href={`/book/${science.id}`} className="title">
+                        <a href={`/book/${science.isbn13}`} className="title">
                         <div className="title">
                         <p>{science.title}</p>
                         </div>
@@ -258,7 +261,7 @@ const SecondScreen = () => {
                     <div key={index} className="humanities-books-item">
                         <div className="rank03">{humanities.bestRank}</div>
                         <img src={humanities.cover} alt={humanities.title} className="humanities-books-image" />
-                        <a href={`/book/${humanities.id}`} className="title">
+                        <a href={`/book/${humanities.isbn13}`} className="title">
                         <div className="title">
                         <p>{humanities.title}</p>
                         </div>
@@ -275,7 +278,7 @@ const SecondScreen = () => {
                     <div key={index} className="improve-books-item">
                         <div className="rank03">{improve.bestRank}</div>
                         <img src={improve.cover} alt={improve.title} className="improve-books-image" />
-                        <a href={`/book/${improve.id}`} className="title">
+                        <a href={`/book/${improve.isbn13}`} className="title">
                         <div className="title">
                         <p>{improve.title}</p>
                         </div>

@@ -8,7 +8,7 @@
 .book-image {
   flex: 0 0 auto;
   margin-right: 100px;
-  padding: 100px;
+  padding: 90px;
   transition: transform 0.3s ease; 
 }
 
@@ -20,10 +20,6 @@
   max-width: 400px;
   height: 500px;
   border-radius: 20px;
-}
-
-.book-info {
-  flex: 1;
 }
 
 .book-title01 {
@@ -47,6 +43,9 @@
   font-weight: bold;
 }
 
+.book-link {
+  text-align: left;
+}
 
 @keyframes fadeIn {
   from {
@@ -61,4 +60,14 @@
 
 .book-title01 {
   animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+.book-ratings {
+  margin-top: 250px;
+  margin-right : left;
+}
+
+.average-rating {
+  font-size : 50px;
+  font-weight: bold;
 }

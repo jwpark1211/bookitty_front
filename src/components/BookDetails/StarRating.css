@@ -1,0 +1,36 @@
+.star-rating {
+    font-size: 0;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  .star-rating input[type="radio"] {
+    display: none;
+  }
+  
+  .star-rating label {
+    display: inline-block;
+    cursor: pointer;
+    padding: 0 1px;
+  }
+  
+  .star-rating label:before {
+    content: "\2605";
+    font-size: 24px;
+    color: #ccc;
+  }
+  
+  .star-rating input[type="radio"]:checked ~ label:before {
+    content: "\2605";
+    color: #f90;
+  }
+  
+  .star-rating input[type="radio"]:checked ~ label:after {
+    content: "\2605";
+    position: absolute;
+    overflow: hidden;
+    width: 50%;
+    color: #f90;
+  }
+  

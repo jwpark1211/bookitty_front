@@ -17,10 +17,8 @@ const App = () => {
 
   useEffect(() => {
     const storedIsSignedIn = sessionStorage.getItem('login');
-    // const storedName = sessionStorage.getItem('name');
     if (storedIsSignedIn) {
       setIsSignedIn(true);
-      // setName(storedName);
     }
   }, []);
 

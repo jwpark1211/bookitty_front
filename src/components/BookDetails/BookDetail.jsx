@@ -10,9 +10,12 @@ const BookDetail = () => {
     const [book, setBook] = useState(null);
     const [ratings, setRatings] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const accessToken = sessionStorage.getItem('accessToken');
+    console.log("Access Token:", accessToken);
+    const refreshToken = sessionStorage.getItem('refreshToken');
+    const memberId = sessionStorage.getItem('memberId');
+    const [userRating, setUserRating] = useState(0);
     const isSignedIn = sessionStorage.getItem('login') === 'true';
-
-    const [userRating,setUserRating] = useState(0);
 
     useEffect(() => {
         const fetchBookDetails = async () => {
@@ -40,14 +43,7 @@ const BookDetail = () => {
                 if (!response.ok) {
                     throw new Error('서버 응답이 올바르지 않습니다.');
                 }
-                const {data} = await response.json();
-                // if (Array.isArray(data)) {
-                //     setRatings(data);
-                    
-                // } else {
-                //     setRatings([]);
-                // }
-
+                const { data } = await response.json();
                 setRatings(data.content);
             } catch (error) {
                 console.error('평점 정보를 가져오는 중 오류 발생:', error);
@@ -68,26 +64,68 @@ const BookDetail = () => {
         console.log(`평점이 제출되었습니다: ${ratingValue} 점`);
     };
 
-    const onRatingButtonClick = async () => {
-        console.log({
-            isbn,
-            memberId:17,
-            score:userRating
-        });
-        try{
-            const ratingsUrl = `http://43.201.231.40:8080/star/new`;
-            const response = await axios.post(ratingsUrl,{
-                isbn,
-                memberId:11,
-                score:userRating
+    const refreshAccessToken = async () => {
+        try {
+            const response = await axios.post('http://43.201.231.40:8080/auth/refresh', {
+                refreshToken: refreshToken
             });
+            sessionStorage.setItem('accessToken', response.data.accessToken);
+            return response.data.accessToken;
+        } catch (error) {
+            console.error('Failed to refresh access token:', error);
+            setShowModal(true);
+            throw new Error('Failed to refresh access token');
+        }
+    };
 
-            } catch (error) {
+    const onRatingButtonClick = async () => {
+        const ratingsUrl = `http://43.201.231.40:8080/star/new`;
+        let token = accessToken;
+        try {
+            const response = await axios.post(
+                ratingsUrl,
+                {
+                    isbn,
+                    memberId,
+                    score: userRating
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            setRatings([...ratings, { score: userRating, comment: '' }]);
+            console.log('Rating submitted successfully:', response.data);
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                try {
+                    token = await refreshAccessToken();
+                    const response = await axios.post(
+                        ratingsUrl,
+                        {
+                            isbn,
+                            memberId,
+                            score: userRating
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            }
+                        }
+                    );
+
+                    setRatings([...ratings, { score: userRating, comment: '' }]);
+                    console.log('Rating submitted successfully:', response.data);
+                } catch (refreshError) {
+                    console.error('Error:', refreshError);
+                }
+            } else {
                 console.error('Error:', error);
             }
-
-            window.location.reload();
-    }
+        }
+    };
 
     const handleCloseModal = () => {
         setShowModal(false);
@@ -117,7 +155,7 @@ const BookDetail = () => {
                     <h3>평점</h3>
                     <div className="average-rating">{averageRating.toFixed(1)}</div>
                     <StarRating value={userRating} setValue={setUserRating} onRatingSubmit={handleRatingSubmit} isSignedIn={isSignedIn} />
-                    <button onClick={onRatingButtonClick}>Button</button>
+                    <button onClick={onRatingButtonClick} className="rate-button" disabled={!isSignedIn}>나도 평가하기</button>
                     <div className="rating-list">
                         {ratings.map((rating, index) => (
                             <div key={index} className="rating-item">

@@ -16,11 +16,11 @@ const App = () => {
   const [name, setName] = useState('');
 
   useEffect(() => {
-    const storedIsSignedIn = localStorage.getItem('isSignedIn');
-    const storedName = localStorage.getItem('name');
-    if (storedIsSignedIn && storedName) {
+    const storedIsSignedIn = sessionStorage.getItem('login');
+    // const storedName = sessionStorage.getItem('name');
+    if (storedIsSignedIn) {
       setIsSignedIn(true);
-      setName(storedName);
+      // setName(storedName);
     }
   }, []);
 

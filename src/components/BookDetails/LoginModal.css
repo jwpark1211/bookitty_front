@@ -11,16 +11,20 @@
     z-index: 1000;
 }
 
-.modal-content {
-    background-color: black;
+.modal-content01 {
+    background-color: #000; 
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    color: white;
 }
 
-.modal-content button {
+.modal-content01 h1 {
+    font-size: 17px;
+    font-weight: 100;
+}
+
+.modal-content01 button {
     margin-top: 20px;
     padding: 10px 20px;
     background-color: #d300ff;
@@ -30,6 +34,6 @@
     cursor: pointer;
 }
 
-.modal-content button:hover {
+.modal-content01 button:hover {
     background-color: #d300ff;
 }

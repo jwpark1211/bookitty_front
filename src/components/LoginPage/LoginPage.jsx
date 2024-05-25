@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
 import './LoginPage.css';
@@ -11,6 +11,13 @@ const LoginPage = ({ setIsLoggedIn }) => {
     const [isLoggedInMessage, setIsLoggedInMessage] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const loginStatus = sessionStorage.getItem('login');
+        if (loginStatus) {
+            setIsLoggedIn(true);
+        }
+    }, [setIsLoggedIn]);
+
     const handleLogin = async () => {
         try {
             const response = await axios.post('http://43.201.231.40:8080/members/login', {
@@ -19,6 +26,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
             });
             console.log(response.data);
             if (response.status === 200) {
+                sessionStorage.setItem('login', true);
                 setIsLoggedIn(true);
                 setIsLoggedInMessage(true);
                 setTimeout(() => {

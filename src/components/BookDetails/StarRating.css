@@ -3,6 +3,9 @@
   white-space: nowrap;
   display: inline-block;
   vertical-align: middle;
+  text-align: center;
+
+
 }
 
 .star-rating input[type="radio"] {

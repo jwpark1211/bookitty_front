@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
 import './LoginPage.css';
@@ -11,16 +11,38 @@ const LoginPage = ({ setIsLoggedIn }) => {
     const [isLoggedInMessage, setIsLoggedInMessage] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const loginStatus = sessionStorage.getItem('login');
+        if (loginStatus) {
+            setIsLoggedIn(true);
+        }
+    }, [setIsLoggedIn]);
+
     const handleLogin = async () => {
         try {
             const response = await axios.post('http://43.201.231.40:8080/members/login', {
                 email: email,
                 password: password
             });
-            console.log(response.data);
+
             if (response.status === 200) {
+                const {jwtToken, idx: memberId} = response.data.data;
+                const { accessToken, refreshToken, roles, name } = jwtToken;
+
+                sessionStorage.setItem('login', 'true');
+                sessionStorage.setItem('accessToken', accessToken);
+                sessionStorage.setItem('refreshToken', refreshToken);
+                sessionStorage.setItem('memberId', memberId);
+                sessionStorage.setItem('name', name);
+                sessionStorage.setItem('roles', JSON.stringify(roles));
+                console.log("Access Token : ", accessToken);
+                console.log("Refresh Token : ", refreshToken);
+                console.log("MemberId : ", memberId );
+                console.log("name : ", name );
+
                 setIsLoggedIn(true);
                 setIsLoggedInMessage(true);
+
                 setTimeout(() => {
                     setIsLoggedInMessage(false);
                     navigate('/');

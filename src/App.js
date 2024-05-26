@@ -16,11 +16,9 @@ const App = () => {
   const [name, setName] = useState('');
 
   useEffect(() => {
-    const storedIsSignedIn = localStorage.getItem('isSignedIn');
-    const storedName = localStorage.getItem('name');
-    if (storedIsSignedIn && storedName) {
+    const storedIsSignedIn = sessionStorage.getItem('login');
+    if (storedIsSignedIn) {
       setIsSignedIn(true);
-      setName(storedName);
     }
   }, []);
 
@@ -40,7 +38,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage setIsLoggedIn={setIsSignedIn} />} />
           <Route path="/signup" element={<SignUpPage setIsSignIn={setIsSignedIn} />} />
           <Route path="/search" element={<SearchResultsPage />} />
-          <Route path="/book/:isbn" element={<BookDetailPage />} />
+          <Route path="/book/:isbn" element={<BookDetailPage isSignedIn={isSignedIn} />} />
           <Route path="/mypage" element={<MyPage isSignedIn={isSignedIn} name={name} />} />
         </Routes>
       </div>
@@ -61,11 +59,10 @@ const SearchResultsPage = () => (
   </>
 );
 
-const BookDetailPage = () => (
+const BookDetailPage = ({ isSignedIn }) => (
   <>
-    <BookDetail />
+    <BookDetail isSignedIn={isSignedIn} />
   </>
 );
-
 
 export default App;

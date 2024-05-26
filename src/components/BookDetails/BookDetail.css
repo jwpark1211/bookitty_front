@@ -76,6 +76,7 @@
 
 .book-detail .rating-statistics {
   margin-top: 20px;
+  margin-bottom: 200px;
 }
 
 .rating-statistics-bar {
@@ -92,3 +93,32 @@
   height : 13px;
 }
 
+.comment-section {
+  margin-right: 500px;
+  color : white;
+}
+
+.book-detail .comment-section {
+  margin-top: 20px;
+}
+
+.comment-box {
+  border: 1px solid #353535;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: #353535;
+}
+
+.comment-box span {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.comment-box:last-child {
+  margin-bottom: 0;
+}
+.comment-info {
+  margin-bottom: 10px;
+  
+}

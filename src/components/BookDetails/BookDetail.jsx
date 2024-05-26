@@ -60,6 +60,56 @@ const BookDetail = () => {
             return;
         }
 
+        const submitRating = async () => {
+            const ratingsUrl = `http://43.201.231.40:8080/star/new`;
+            let token = accessToken;
+            try {
+                const response = await axios.post(
+                    ratingsUrl,
+                    {
+                        isbn,
+                        memberId,
+                        score: ratingValue
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
+
+                setRatings([...ratings, { score: ratingValue, comment: '' }]);
+                console.log('Rating submitted successfully:', response.data);
+            } catch (error) {
+                if (error.response && error.response.status === 401) {
+                    try {
+                        token = await refreshAccessToken();
+                        const response = await axios.post(
+                            ratingsUrl,
+                            {
+                                isbn,
+                                memberId,
+                                score: ratingValue
+                            },
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${token}`
+                                }
+                            }
+                        );
+
+                        setRatings([...ratings, { score: ratingValue, comment: '' }]);
+                        console.log('Rating submitted successfully:', response.data);
+                    } catch (refreshError) {
+                        console.error('Error:', refreshError);
+                    }
+                } else {
+                    console.error('Error:', error);
+                }
+            }
+        };
+
+        submitRating();
         setUserRating(ratingValue);
         console.log(`평점이 제출되었습니다: ${ratingValue} 점`);
     };
@@ -78,55 +128,6 @@ const BookDetail = () => {
         }
     };
 
-    const onRatingButtonClick = async () => {
-        const ratingsUrl = `http://43.201.231.40:8080/star/new`;
-        let token = accessToken;
-        try {
-            const response = await axios.post(
-                ratingsUrl,
-                {
-                    isbn,
-                    memberId,
-                    score: userRating
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            );
-
-            setRatings([...ratings, { score: userRating, comment: '' }]);
-            console.log('Rating submitted successfully:', response.data);
-        } catch (error) {
-            if (error.response && error.response.status === 401) {
-                try {
-                    token = await refreshAccessToken();
-                    const response = await axios.post(
-                        ratingsUrl,
-                        {
-                            isbn,
-                            memberId,
-                            score: userRating
-                        },
-                        {
-                            headers: {
-                                Authorization: `Bearer ${token}`
-                            }
-                        }
-                    );
-
-                    setRatings([...ratings, { score: userRating, comment: '' }]);
-                    console.log('Rating submitted successfully:', response.data);
-                } catch (refreshError) {
-                    console.error('Error:', refreshError);
-                }
-            } else {
-                console.error('Error:', error);
-            }
-        }
-    };
-
     const handleCloseModal = () => {
         setShowModal(false);
     };
@@ -138,6 +139,11 @@ const BookDetail = () => {
     const averageRating = ratings.length > 0
         ? ratings.reduce((acc, rating) => acc + rating.score, 0) / ratings.length
         : 0;
+
+    const ratingCounts = [0, 0, 0, 0, 0];
+    ratings.forEach(rating => {
+        ratingCounts[rating.score - 1]++;
+    });
 
     return (
         <div className="book-detail">
@@ -155,13 +161,18 @@ const BookDetail = () => {
                     <h3>평점</h3>
                     <div className="average-rating">{averageRating.toFixed(1)}</div>
                     <StarRating value={userRating} setValue={setUserRating} onRatingSubmit={handleRatingSubmit} isSignedIn={isSignedIn} />
-                    <button onClick={onRatingButtonClick} className="rate-button" disabled={!isSignedIn}>나도 평가하기</button>
                     <div className="rating-list">
                         {ratings.map((rating, index) => (
                             <div key={index} className="rating-item">
-                                <span className="rating-score">{rating.score}점</span>
                                 <span className="rating-comment">{rating.comment}</span>
                             </div>
+                        ))}
+                    </div>
+                    <div className="rating-statistics">
+                        {ratingCounts.map((count, index) => (
+                            <div key={index} className="rating-statistics-bar">
+                                <span>{index + 1}</span>
+                                <div className="bar" style={{ width: `${(count / ratings.length) * 100}%` }}></div>                            </div>
                         ))}
                     </div>
                 </div>

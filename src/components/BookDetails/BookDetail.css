@@ -74,17 +74,20 @@
   font-weight: bold;
 }
 
-
-.rate-button {
-  background-color: black;
-  color: #d300ff;
-  font-weight: 0;
-  font-size: 15px;
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
+.book-detail .rating-statistics {
+  margin-top: 20px;
 }
 
-.rate-button:hover {
-  background-color: #000000; 
+.rating-statistics-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
 }
+
+.rating-statistics-bar .bar {
+  height: 20px;
+  background-color: #d300ff;
+  margin: 0 10px;
+  border-radius: 10px;
+}
+

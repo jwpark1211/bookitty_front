@@ -5,7 +5,6 @@ import StarRating from './StarRating';
 import LoginModal from './LoginModal';
 import CommentModal from './CommentModal';
 import axios from 'axios';
-import CommentPage from './CommentPage';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const BookDetail = () => {
@@ -374,7 +373,6 @@ const BookDetail = () => {
 {showCommentModal && <CommentModal onClose={handleCloseCommentModal} accessToken={accessToken} isbn={isbn} memberId={memberId} />}
 </div>
             {showModal && <LoginModal onClose={handleCloseModal} />}
-            {showAllCommentsModal && <CommentPage comments={comments} onClose={handleCloseAllCommentsModal} />}
         </div>
     );
 };

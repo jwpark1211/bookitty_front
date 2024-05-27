@@ -76,6 +76,7 @@
 
 .book-detail .rating-statistics {
   margin-top: 20px;
+  margin-bottom: 200px;
 }
 
 .rating-statistics-bar {
@@ -89,5 +90,82 @@
   background-color: #d300ff;
   margin: 0 10px;
   border-radius: 10px;
+  height : 13px;
 }
 
+.comment-section {
+  margin-right: 500px;
+  color : white;
+}
+
+.book-detail .comment-section {
+  margin-top: 20px;
+}
+
+.comment-box {
+  border: 1px solid #353535;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: #353535;
+}
+
+.comment-box span {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.comment-box:last-child {
+  margin-bottom: 0;
+}
+.comment-info {
+  margin-bottom: 10px;
+  
+}
+.more-button {
+  background-color: black;
+  color: white; 
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 100;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.like-section {
+  margin-top: 10px;
+}
+
+
+
+.like-section button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.like-section button:hover i {
+  color: rgb(255, 1, 1);
+}
+
+.like-section button i {
+  color: rgb(255, 205, 205);
+  margin-right: 5px;
+}
+
+.fas.fa-heart.liked {
+  color: red; /* Change the color to red when liked */
+}
+
+.comment-button {
+  background-color: black;
+  border : none;
+  color : white;
+  margin-right: 200px;
+  margin-bottom: 20px;
+}

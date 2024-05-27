@@ -364,8 +364,9 @@ const BookDetail = () => {
             </div>
         ))
     ) : (
-        <span>코멘트가 없습니다.</span>
-    )}
+<div class="comment-container01">
+    코멘트가 없습니다.
+</div>    )}
     {comments.length > visibleComments && (
         <button className="more-button" onClick={handleShowAllComments}>더 보기</button>
     )}

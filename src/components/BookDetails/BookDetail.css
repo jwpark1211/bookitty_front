@@ -166,6 +166,10 @@
   background-color: black;
   border : none;
   color : white;
-  margin-right: 200px;
-  margin-bottom: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.comment-container01 {
+  text-align: center;
 }

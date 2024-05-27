@@ -122,3 +122,50 @@
   margin-bottom: 10px;
   
 }
+.more-button {
+  background-color: black;
+  color: white; 
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 100;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.like-section {
+  margin-top: 10px;
+}
+
+
+
+.like-section button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.like-section button:hover i {
+  color: rgb(255, 1, 1);
+}
+
+.like-section button i {
+  color: rgb(255, 205, 205);
+  margin-right: 5px;
+}
+
+.fas.fa-heart.liked {
+  color: red; /* Change the color to red when liked */
+}
+
+.comment-button {
+  background-color: black;
+  border : none;
+  color : white;
+  margin-right: 200px;
+  margin-bottom: 20px;
+}

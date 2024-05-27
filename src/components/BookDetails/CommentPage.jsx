@@ -17,6 +17,7 @@ const CommentPage = ({ comments, onClose }) => {
                     </div>
                 ))}
             </div>
+            
         </div>
     );
 };

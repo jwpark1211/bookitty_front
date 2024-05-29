@@ -16,12 +16,15 @@ const App = () => {
   const [name, setName] = useState('');
 
   useEffect(() => {
-    const storedIsSignedIn = sessionStorage.getItem('login');
-    if (storedIsSignedIn) {
+    const loginStatus = sessionStorage.getItem('login');
+    const storedName = sessionStorage.getItem('name');
+    if (loginStatus) {
       setIsSignedIn(true);
+      if (storedName) {
+        setName(storedName);
+      }
     }
   }, []);
-
   return (
     <Router>
       <div className="app">

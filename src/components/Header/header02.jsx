@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './header02.css';
 
 const Header02 = ({ isSignedIn, name }) => {
+  console.log("이름 : ", name);
   return (
     <header className='header02'>
       <div className="logo-container">

@@ -9,12 +9,17 @@ const LoginPage = ({ setIsLoggedIn }) => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [isLoggedInMessage, setIsLoggedInMessage] = useState(false);
+    const [name, setName] = useState(""); 
     const navigate = useNavigate();
 
     useEffect(() => {
         const loginStatus = sessionStorage.getItem('login');
         if (loginStatus) {
             setIsLoggedIn(true);
+            const storedName = sessionStorage.getItem('name'); 
+            if (storedName) {
+                setName(storedName); 
+            }
         }
     }, [setIsLoggedIn]);
 
@@ -25,23 +30,32 @@ const LoginPage = ({ setIsLoggedIn }) => {
                 password: password
             });
 
+            console.log('Full server response:', response);
+
             if (response.status === 200) {
-                const {jwtToken, idx: memberId} = response.data.data;
-                const { accessToken, refreshToken, roles, name } = jwtToken;
+                const { jwtToken, idx: memberId, name } = response.data.data;
+                const { accessToken, refreshToken } = jwtToken;
+
+                console.log('Extracted data:', {
+                    jwtToken,
+                    memberId,
+                    name,
+                    accessToken,
+                    refreshToken
+                });
 
                 sessionStorage.setItem('login', 'true');
                 sessionStorage.setItem('accessToken', accessToken);
                 sessionStorage.setItem('refreshToken', refreshToken);
                 sessionStorage.setItem('memberId', memberId);
                 sessionStorage.setItem('name', name);
-                sessionStorage.setItem('roles', JSON.stringify(roles));
-                console.log("Access Token : ", accessToken);
-                console.log("Refresh Token : ", refreshToken);
-                console.log("MemberId : ", memberId );
-                console.log("name : ", name );
 
                 setIsLoggedIn(true);
                 setIsLoggedInMessage(true);
+                setName(name);
+
+                console.log('Email:', email);
+                console.log('Name:', name);
 
                 setTimeout(() => {
                     setIsLoggedInMessage(false);

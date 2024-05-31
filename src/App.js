@@ -22,9 +22,12 @@ const App = () => {
       setIsSignedIn(true);
       if (storedName) {
         setName(storedName);
+      } else {
+        setName(''); // 이름이 저장되어 있지 않을 경우 빈 문자열로 초기화
       }
     }
   }, []);
+
   return (
     <Router>
       <div className="app">

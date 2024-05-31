@@ -5,36 +5,36 @@ import "./MyPage.css";
 const MyPage = ({ isSignedIn, email, name, profileImage }) => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
-    const [previewImage, setPreviewImage] = useState(profileImage);
+    const [profileImg, setProfileImg] = useState(profileImage);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        setPreviewImage(URL.createObjectURL(file));
+        setProfileImg(URL.createObjectURL(file));
+        setSelectedFile(file);
         console.log('이미지 변경:', file);
     };
 
     const handleModalOpen = () => {
         setIsModalOpen(true);
-        console.log('모달 열기');
     };
 
     const handleModalClose = () => {
         setIsModalOpen(false);
         setErrorMessage('');
-        console.log('모달 닫기');
     };
 
     const handleImageUpload = async () => {
         try {
-            if (!profileImage) {
+            if (!selectedFile) {
                 setErrorMessage('프로필 이미지를 선택해주세요.');
                 console.log('프로필 이미지를 선택해주세요.');
                 return;
             }
 
             const formData = new FormData();
-            formData.append('profileImage', profileImage);
+            formData.append('profileImage', selectedFile);
 
             const response = await fetch(`http://43.201.231.40:8080/members/{id}/profile`, {
                 method: 'POST',
@@ -45,7 +45,9 @@ const MyPage = ({ isSignedIn, email, name, profileImage }) => {
             });
 
             if (response.ok) {
-                console.log('프로필 이미지 업로드 성공:', await response.json());
+                const responseData = await response.json();
+                console.log('프로필 이미지 업로드 성공:', responseData);
+                setProfileImg(responseData.profileImageUrl);
                 handleModalClose();
             } else {
                 throw new Error('프로필 이미지 업로드 중 오류가 발생했습니다.');
@@ -60,8 +62,8 @@ const MyPage = ({ isSignedIn, email, name, profileImage }) => {
         <div className="my-page">
             <div className="profile-section">
                 <div className="profile-preview-container">
-                    {previewImage ? (
-                        <img src={previewImage} alt="프로필" className="profile-preview" />
+                    {profileImg ? (
+                        <img src={profileImg} alt="프로필" className="profile-preview" />
                     ) : (
                         <div className="empty-profile"></div>
                     )}

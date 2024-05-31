@@ -4,6 +4,7 @@ import './BookDetail.css';
 import StarRating from './StarRating';
 import LoginModal from './LoginModal';
 import CommentModal from './CommentModal';
+import BookState from './BookState';
 import CommentPage from './CommentPage';
 import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -23,10 +24,18 @@ const BookDetail = () => {
     const [showAllCommentsModal, setShowAllCommentsModal] = useState(false);
     const [likedComments, setLikedComments] = useState([]);
     const [newComment, setNewComment] = useState([]);
+    const [bookState, setBookState] = useState('');
     const [showCommentModal, setShowCommentModal] = useState(false);
     const handleShowCommentModal = () => {
-        setShowCommentModal(true);
+        if (!isSignedIn) {
+            setShowModal(true);
+        } else {
+            setShowCommentModal(true);
+        }
     };
+    
+
+    
 
     const handleCloseCommentModal = () => {
         setShowCommentModal(false);
@@ -326,6 +335,11 @@ const BookDetail = () => {
                 <h4 className="book-description">{book.description}</h4>
                 <h5 className="book-price">정가 {book.priceStandard}원</h5>
                 <a href={book.link} className="book-link" target="_blank" rel="noopener noreferrer">알라딘에서 보기</a>
+                <div className='BookState'>
+                <BookState memberId={memberId} isbn={isbn} />
+
+</div>
+                
                 <div className="book-ratings">
                     <h3>평점</h3>
                     <div className="average-rating">{averageRating.toFixed(1)}</div>

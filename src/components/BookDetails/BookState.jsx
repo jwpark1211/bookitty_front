@@ -35,7 +35,7 @@ const BookState = ({ isbn, bookState }) => {
       console.log('Request JSON:', JSON.stringify({ isbn, memberId, state, categoryName: book.categoryName, bookTitle: book.title, bookAuthor: book.author, bookImgUrl: book.cover }));
       const response = await axios.post(stateUrl, { isbn, memberId, state, categoryName: book.categoryName, bookTitle: book.title, bookAuthor: book.author, bookImgUrl: book.cover }, { headers });
       console.log('Response for state ID request:', response.data);
-      return response.data.id;
+      return response.data.data.id;
     } catch (error) {
       console.error('Error fetching state ID:', error);
       throw new Error('Failed to fetch state ID');
@@ -45,7 +45,7 @@ const BookState = ({ isbn, bookState }) => {
   const fetchBookStates = async () => {
     const statesUrl = `${baseURL}/state/isbn/${isbn}`;
     try {
-      const response = await axios.get(statesUrl, { headers }); // 인증 헤더 추가
+      const response = await axios.get(statesUrl, { headers });
       setBookStates(response.data);
       console.log('Book states:', response.data);
     } catch (error) {
@@ -79,7 +79,7 @@ const BookState = ({ isbn, bookState }) => {
       console.log('Error adding state:', error);
     }
   };
-
+/*
   const handleUpdateState = async (state) => {
     console.log(`Updating state: state=${state}, stateId=${stateId}`);
     try {
@@ -91,10 +91,10 @@ const BookState = ({ isbn, bookState }) => {
       console.log('Error updating state:', error);
     }
   };
+*/
 
   const handleDeleteState = async () => {
     console.log(`Deleting state: stateId=${stateId}`);
-    console.log(stateId)
     try {
       console.log('Sending request to delete state:', stateId);
       await axios.delete(`${baseURL}/state/${stateId}`, { headers });
@@ -118,7 +118,7 @@ const BookState = ({ isbn, bookState }) => {
       handleDeleteState();
     } else {
       if (stateId) {
-        handleUpdateState(newState);
+        handleAddState(newState);
       } else {
         handleAddState(newState);
       }

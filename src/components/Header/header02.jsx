@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from './logo.svg';
 import './header02.css';
 
-const Header02 = ({ isSignedIn, name }) => {
+const Header02 = ({ isSignedIn, name, profileImage }) => {
   console.log("이름 : ", name);
   return (
     <header className='header02'>
@@ -14,9 +14,12 @@ const Header02 = ({ isSignedIn, name }) => {
       </div>
       <div className="user-container">
         {isSignedIn && (
-          <Link to="/mypage" className="user-nickname">
-            {name} 님
-          </Link>
+          <div className="user-profile">
+            <img src={profileImage} alt="프로필 사진" className="profile-pic" width="30" height="30" />
+            <Link to="/mypage" className="user-nickname">
+              {name} 님
+            </Link>
+          </div>
         )}
       </div>
     </header>

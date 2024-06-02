@@ -9,19 +9,15 @@ const LoginPage = ({ setIsLoggedIn }) => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [isLoggedInMessage, setIsLoggedInMessage] = useState(false);
-    const [name, setName] = useState(""); 
     const navigate = useNavigate();
 
     useEffect(() => {
         const loginStatus = sessionStorage.getItem('login');
         if (loginStatus) {
             setIsLoggedIn(true);
-            const storedName = sessionStorage.getItem('name'); 
-            if (storedName) {
-                setName(storedName); 
-            }
         }
     }, [setIsLoggedIn]);
+    
 
     const handleLogin = async () => {
         try {
@@ -29,34 +25,34 @@ const LoginPage = ({ setIsLoggedIn }) => {
                 email: email,
                 password: password
             });
-
-            console.log('Full server response:', response);
-
+    
+            console.log('Full server response:', response.data);
+    
             if (response.status === 200) {
-                const { jwtToken, idx: memberId, name } = response.data.data;
+                const { jwtToken, idx: memberId, profileImg, name } = response.data.data;
                 const { accessToken, refreshToken } = jwtToken;
-
+    
                 console.log('Extracted data:', {
                     jwtToken,
                     memberId,
-                    name,
                     accessToken,
-                    refreshToken
+                    refreshToken,
+                    profileImg,
+                    name
                 });
-
+    
                 sessionStorage.setItem('login', 'true');
                 sessionStorage.setItem('accessToken', accessToken);
                 sessionStorage.setItem('refreshToken', refreshToken);
                 sessionStorage.setItem('memberId', memberId);
+                sessionStorage.setItem('profileImg', profileImg); // 오타 수정
                 sessionStorage.setItem('name', name);
-
+    
                 setIsLoggedIn(true);
                 setIsLoggedInMessage(true);
-                setName(name);
-
+    
                 console.log('Email:', email);
-                console.log('Name:', name);
-
+    
                 setTimeout(() => {
                     setIsLoggedInMessage(false);
                     navigate('/');
@@ -69,7 +65,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
             setError("로그인 중 오류가 발생했습니다.");
         }
     };
-
+    
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
     };

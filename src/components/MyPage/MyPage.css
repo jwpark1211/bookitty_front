@@ -13,6 +13,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 200px;
   }
   
   .profile-preview-container {
@@ -51,6 +52,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 200px;
+
   }
   
   .profile-edit-button {
@@ -139,3 +142,7 @@
     display: none;
   }
   
+  .name {
+    font-size: 17px; 
+    font-weight: bold;
+}

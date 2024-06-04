@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./MyPage.css";
 
-const MyPage = ({ isSignedIn, email, name, profileImage }) => {
+const MyPage = () => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
-    const [profileImg, setProfileImg] = useState(profileImage);
+    const [profileImg, setProfileImg] = useState(sessionStorage.getItem('profileImg') || '');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
+
+    const email = sessionStorage.getItem('email') || '';
+    const name = sessionStorage.getItem('name') || '';
+    const accessToken = sessionStorage.getItem('accessToken') || '';
+    const memberId = sessionStorage.getItem('memberId') || '';
+
+    useEffect(() => {
+        console.log(email);
+    }, [email]);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -34,20 +43,28 @@ const MyPage = ({ isSignedIn, email, name, profileImage }) => {
             }
 
             const formData = new FormData();
-            formData.append('profileImage', selectedFile);
+            formData.append('profile', selectedFile);
 
-            const response = await fetch(`http://43.201.231.40:8080/members/{id}/profile`, {
+            const requestURL = `http://43.201.231.40:8080/members/${memberId}/profile`;
+            console.log('요청 URL:', requestURL);
+
+            const response = await fetch(requestURL, {
                 method: 'POST',
-                body: formData,
                 headers: {
-                    'Accept': 'application/json',
-                }
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+                body: formData
             });
 
             if (response.ok) {
                 const responseData = await response.json();
                 console.log('프로필 이미지 업로드 성공:', responseData);
-                setProfileImg(responseData.profileImageUrl);
+
+                // responseData의 구조를 감안하여 profileImg URL을 업데이트
+                const newProfileImg = responseData.data.profileImg;
+
+                setProfileImg(newProfileImg);
+                sessionStorage.setItem('profileImg', newProfileImg);  // sessionStorage에 저장
                 handleModalClose();
             } else {
                 throw new Error('프로필 이미지 업로드 중 오류가 발생했습니다.');
@@ -69,7 +86,7 @@ const MyPage = ({ isSignedIn, email, name, profileImage }) => {
                     )}
                 </div>
                 <div className="user-info">
-                    <p className="name">{name} 님 </p>
+                    <p className="name">{name} 님</p>
                     <p className="email">{email}</p>
                 </div>
             </div>

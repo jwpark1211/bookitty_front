@@ -74,7 +74,7 @@ const SignUpPage = ({ setIsSignIn }) => {
     
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         if (!passwordRegex.test(newPassword)) {
-            setError("비밀번호는 대소문자와 특수기호를 포함하여 8자 이상이어야 합니다.");
+            //setError("비밀번호는 대소문자와 특수기호를 포함하여 8자 이상이어야 합니다.");
         } else {
             setError(""); 
         }
@@ -102,7 +102,7 @@ const SignUpPage = ({ setIsSignIn }) => {
             if (data.data.unique) {
                 setIsEmailValid(true);
                 setIsCheckEmailFirst(true);
-                setError(<span className = "error-message white">사용 가능한 이메일입니다. </span>);
+                alert("사용 가능한 메일입니다");
             } else {
                 setIsEmailValid(false);
                 setError("이미 등록된 이메일입니다.");
@@ -144,7 +144,7 @@ const SignUpPage = ({ setIsSignIn }) => {
                         type="password"
                         value={password}
                         onChange={handlePasswordChange}
-                        placeholder="비밀번호 입력(영문자, 숫자, 특수문자 조합 최소 8문자 이내)"
+                        placeholder="대소문자와 특수기호를 포함하여 8자 이상"
                         className="password-input"
                     />
                     <label className="label-text03">비밀번호 확인</label>

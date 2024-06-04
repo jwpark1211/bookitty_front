@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./MyPage.css";
 
@@ -14,9 +14,7 @@ const MyPage = () => {
     const accessToken = sessionStorage.getItem('accessToken') || '';
     const memberId = sessionStorage.getItem('memberId') || '';
 
-    useEffect(() => {
-        console.log(email);
-    }, [email]);
+    console.log("이메일 : ", email);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];

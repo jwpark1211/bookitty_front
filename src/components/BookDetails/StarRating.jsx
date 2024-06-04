@@ -1,26 +1,27 @@
 import React, { useState } from 'react';
 import './StarRating.css';
 import LoginModal from './LoginModal';
+import CommentBox from './CommentBox';
 
-const StarRating = ({ value, setValue, onRatingSubmit, onDeleteRating, isSignedIn }) => {
+const StarRating = ({ value, setValue, onRatingSubmit, isSignedIn }) => {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const stars = [1, 2, 3, 4, 5];
 
     const handleChange = (event, star) => {
-      const newValue = Number(event.target.value);
-      if (isSignedIn) {
-          if (newValue === value) {
-              onDeleteRating(newValue);
-          } else {
-              setValue(star);
-              onRatingSubmit(star);
-          }
-      } else {
-          setShowLoginModal(true);
-      }
-  };
-  
-  
+        const newValue = Number(event.target.value);
+        if (isSignedIn) {
+            if (newValue === value) {
+                // 현재 값과 같은 값을 선택했을 때는 평점을 삭제한다.
+                setValue(0);
+                onRatingSubmit(0); // 평점 삭제를 위해 0을 전달
+            } else {
+                setValue(star);
+                onRatingSubmit(star);
+            }
+        } else {
+            setShowLoginModal(true);
+        }
+    };
 
     return (
         <div className="star-rating">

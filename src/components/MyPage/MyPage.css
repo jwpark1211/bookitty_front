@@ -1,148 +1,152 @@
 .my-page {
-    background-color: black;
-    height: 100vh;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    color: white;
-  }
-  
-  .profile-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 200px;
-  }
-  
-  .profile-preview-container {
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-  }
-  
-  .profile-preview {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  
-  .user-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color : white;
-  }
-  
-  .error-message {
-    color: black;
-    margin-top: 10px;
-  }
-  
-  .profile-edit-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 200px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #000; /* 배경색을 검정으로 설정 */
+  color: #fff; /* 글자색을 흰색으로 설정 */
+}
 
-  }
-  
-  .profile-edit-button {
-    background-color: #5e5c5c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
-  
-  .profile-edit-button:hover {
-    background-color: #787878;
-  }
-  
-  .modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-  
-  .modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-    text-align: center;
-    border-radius: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  }
-  
-  .close-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close-button:hover,
-  .close-button:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  
-  .upload-button {
-    background-color: white;
-    color: black;
-    border: none;
-    font-size: 16px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
 
-  
-  .file-input-label {
-    background-color: white;
-    color : black;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-weight: bold;
-    display: inline-block;
-    transition: background-color 0.3s ease;
-  }
-  
-  
-  .file-input {
-    display: none;
-  }
-  
-  .name {
-    font-size: 17px; 
-    font-weight: bold;
+.profile-preview-container {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.profile-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-info {
+  text-align: center;
+}
+
+.name {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.email {
+  font-size: 1em;
+  margin: 0;
+}
+
+.profile-edit-section {
+  margin-top: 10px;
+}
+
+.profile-edit-button {
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.profile-edit-button:hover {
+  background-color: #666;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  color: #000;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.file-input-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.file-input {
+  display: block;
+  margin: 0 auto 20px auto;
+}
+
+.upload-button {
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.upload-button:hover {
+  background-color: #666;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 10px;
+}
+
+.divider {
+  width: 80%;
+  height: 1px;
+  background-color: #ccc;
+  margin: 20px 0;
+}
+
+.reading-stats-section {
+  width: 80%;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.category-stats {
+  margin-top: 150px;
+}
+
+.category-stats-section {
+  text-align: center;
+  padding : 20px;
+}
+
+.category-stats-section canvas {
+  display: inline-block; 
+  text-align: center;
+}
+
+.bottom-divider {
+  width: 80%;
+  height: 1px;
+  background-color: #ccc;
+  margin: 20px 0;
 }

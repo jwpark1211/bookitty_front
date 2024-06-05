@@ -178,3 +178,17 @@
 .comment-container01 {
   text-align: center;
 }
+
+.comment-box .edit-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.comment-box .edit-button:hover {
+  background-color: gray;
+}

@@ -6,6 +6,7 @@ import LoginModal from './LoginModal';
 import CommentModal from './CommentModal';
 import BookState from './BookState';
 import CommentPage from './CommentPage';
+import CommentBox from './CommentBox';
 import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -26,6 +27,8 @@ const BookDetail = () => {
     const [newComment, setNewComment] = useState([]);
     const [bookState, setBookState] = useState('');
     const [showCommentModal, setShowCommentModal] = useState(false);
+
+
     const handleShowCommentModal = () => {
         if (!isSignedIn) {
             setShowModal(true);
@@ -33,13 +36,37 @@ const BookDetail = () => {
             setShowCommentModal(true);
         }
     };
-    
-
-    
 
     const handleCloseCommentModal = () => {
         setShowCommentModal(false);
     };
+
+    const handleEditComment = async (commentId, editedContent) => {
+        try {
+            const editCommentUrl = `http://43.201.231.40:8080/comment/${commentId}`;
+            const response = await axios.patch(
+                editCommentUrl,
+                { content: editedContent },
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                }
+            );
+
+            const updatedComments = comments.map(comment => {
+                if (comment.id === commentId) {
+                    return { ...comment, content: editedContent };
+                }
+                return comment;
+            });
+            setComments(updatedComments);
+            console.log('Comment edited successfully:', response.data);
+        } catch (error) {
+            console.error('Failed to edit comment:', error);
+        }
+    };
+
 
     const fetchComments = async () => {
         try {
@@ -88,8 +115,6 @@ const BookDetail = () => {
                 console.error('평점 정보를 가져오는 중 오류 발생:', error);
             }
         };
-        
-        
 
         const likedCommentsFromStorage = JSON.parse(localStorage.getItem('likedComments'));
         if (likedCommentsFromStorage) {
@@ -98,7 +123,6 @@ const BookDetail = () => {
 
         fetchBookDetails();
         fetchRatings();
-        fetchComments();
         fetchComments();
     }, [isbn]);
 
@@ -141,65 +165,121 @@ const BookDetail = () => {
         }
     }, [comments, accessToken]);
 
-    const handleRatingSubmit = (ratingValue) => {
+    const handleRatingSubmit = async (ratingValue) => {
         if (!isSignedIn) {
             setShowModal(true);
             return;
         }
-
+    
         const submitRating = async () => {
-            const ratingsUrl = `http://43.201.231.40:8080/star/new`;
+            const existingRating = ratings.find(rating => rating.memberId === memberId && rating.score === ratingValue);
             let token = accessToken;
-            try {
-                const response = await axios.post(
-                    ratingsUrl,
-                    {
-                        isbn,
-                        memberId,
-                        score: ratingValue
-                    },
-                    {
+    
+            if (existingRating) {
+                // 이미 해당 점수에 대한 평가가 존재하면 수정
+                const patchRatingUrl = `http://43.201.231.40:8080/star/${existingRating.id}`;
+                console.log(patchRatingUrl);
+                try {
+                    const response = await axios.patch(patchRatingUrl, { score: ratingValue }, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
-                    }
-                );
-
-                setRatings([...ratings, { score: ratingValue, comment: '' }]);
-                console.log('Rating submitted successfully:', response.data);
-            } catch (error) {
-                if (error.response && error.response.status === 401) {
-                    try {
-                        token = await refreshAccessToken();
-                        const response = await axios.post(
-                            ratingsUrl,
-                            {
-                                isbn,
-                                memberId,
-                                score: ratingValue
-                            },
-                            {
+                    });
+    
+                    const updatedRatings = ratings.map(rating => {
+                        if (rating.id === existingRating.id) {
+                            return { ...rating, score: ratingValue };
+                        }
+                        return rating;
+                    });
+    
+                    setRatings(updatedRatings);
+                    console.log('Rating updated successfully:', response.data); // 평점이 수정되었음을 콘솔에 기록
+                } catch (error) {
+                    if (error.response && error.response.status === 401) {
+                        try {
+                            token = await refreshAccessToken();
+                            const response = await axios.patch(patchRatingUrl, { score: ratingValue }, {
                                 headers: {
                                     Authorization: `Bearer ${token}`
                                 }
-                            }
-                        );
-
-                        setRatings([...ratings, { score: ratingValue, comment: '' }]);
-                        console.log('Rating submitted successfully:', response.data);
-                    } catch (refreshError) {
-                        console.error('Error:', refreshError);
+                            });
+    
+                            const updatedRatings = ratings.map(rating => {
+                                if (rating.id === existingRating.id) {
+                                    return { ...rating, score: ratingValue };
+                                }
+                                return rating;
+                            });
+    
+                            setRatings(updatedRatings);
+                            console.log('Rating updated successfully:', response.data); // 평점이 수정되었음을 콘솔에 기록
+                        } catch (refreshError) {
+                            console.error('Error:', refreshError);
+                        }
+                    } else {
+                        console.error('Error:', error);
                     }
-                } else {
-                    console.error('Error:', error);
+                }
+            } else {
+                // 해당 점수에 대한 평가가 없으면 새로운 평가 생성
+                const ratingsUrl = `http://43.201.231.40:8080/star/new`;
+                try {
+                    const response = await axios.post(
+                        ratingsUrl,
+                        {
+                            isbn,
+                            memberId,
+                            score: ratingValue
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            }
+                        }
+                    );
+    
+                    setRatings([...ratings, { id: response.data.id, score: ratingValue, comment: '' }]);
+                    console.log('Rating submitted successfully:', response.data);
+                } catch (error) {
+                    if (error.response && error.response.status === 401) {
+                        try {
+                            token = await refreshAccessToken();
+                            const response = await axios.post(
+                                ratingsUrl,
+                                {
+                                    isbn,
+                                    memberId,
+                                    score: ratingValue
+                                },
+                                {
+                                    headers: {
+                                        Authorization: `Bearer ${token}`
+                                    }
+                                }
+                            );
+    
+                            setRatings([...ratings, { id: response.data.id, score: ratingValue, comment: '' }]);
+                            console.log('Rating submitted successfully:', response.data);
+                        } catch (refreshError) {
+                            console.error('Error:', refreshError);
+                        }
+                    } else {
+                        console.error('Error:', error);
+                    }
                 }
             }
         };
-
-        submitRating();
-        setUserRating(ratingValue);
-        console.log(`평점이 제출되었습니다: ${ratingValue} 점`);
+    
+        try {
+            await submitRating();
+            setUserRating(ratingValue);
+            console.log(`평점이 제출되었습니다: ${ratingValue} 점`);
+        } catch (error) {
+            console.error('Failed to submit rating:', error);
+        }
     };
+    
 
     const refreshAccessToken = async () => {
         try {
@@ -215,18 +295,17 @@ const BookDetail = () => {
         }
     };
 
-
     const handleCommentSubmit = async () => {
         if (!isSignedIn) {
             setShowModal(true);
             return;
         }
-    
+
         if (!newComment.trim()) {
             console.error('빈 코멘트는 제출할 수 없습니다.');
             return;
         }
-    
+
         try {
             const commentUrl = `http://43.201.231.40:8080/comment/new`;
             const response = await axios.post(
@@ -242,7 +321,7 @@ const BookDetail = () => {
                     }
                 }
             );
-    
+
             setComments([...comments, { id: response.data.id, content: newComment, memberId, memberName: '내 이름' }]);
             setNewComment('');
             console.log('Comment submitted successfully:', response.data);
@@ -250,10 +329,6 @@ const BookDetail = () => {
             console.error('Failed to submit comment:', error);
         }
     };
-    
-    
-    
-    
 
     const handleCloseModal = () => {
         setShowModal(false);
@@ -272,7 +347,7 @@ const BookDetail = () => {
             setShowModal(true);
             return;
         }
-    
+
         try {
             const action = isLiked ? 'decrease' : 'increase';
             const likeUrl = `http://43.201.231.40:8080/comment/${commentId}/member/${memberId}/like/${action}`;
@@ -285,7 +360,7 @@ const BookDetail = () => {
                     }
                 }
             );
-    
+
             const updatedComments = comments.map(comment => {
                 if (comment.id === commentId) {
                     const newLikes = isLiked ? (comment.like_count || 0) - 1 : (comment.like_count || 0) + 1;
@@ -294,21 +369,19 @@ const BookDetail = () => {
                 return comment;
             });
             setComments(updatedComments);
-    
+
             const updatedLikedComments = isLiked 
                 ? likedComments.filter(id => id !== commentId)
                 : [...likedComments, commentId];
             
             setLikedComments(updatedLikedComments);
             localStorage.setItem('likedComments', JSON.stringify(updatedLikedComments));
-    
+
             console.log(`좋아요 ${isLiked ? '취소' : '요청'} 성공:`, response.data);
         } catch (error) {
             console.error(`좋아요 ${isLiked ? '취소' : '요청'} 에러:`, error);
         }
     };
-    
-    
 
     if (!book) {
         return null;
@@ -322,6 +395,7 @@ const BookDetail = () => {
     ratings.forEach(rating => {
         ratingCounts[rating.score - 1]++;
     });
+    
 
     return (
         <div className="book-detail">
@@ -336,10 +410,9 @@ const BookDetail = () => {
                 <h5 className="book-price">정가 {book.priceStandard}원</h5>
                 <a href={book.link} className="book-link" target="_blank" rel="noopener noreferrer">알라딘에서 보기</a>
                 <div className='BookState'>
-                <BookState memberId={memberId} isbn={isbn} />
+                    <BookState memberId={memberId} isbn={isbn} />
+                </div>
 
-</div>
-                
                 <div className="book-ratings">
                     <h3>평점</h3>
                     <div className="average-rating">{averageRating.toFixed(1)}</div>
@@ -362,15 +435,15 @@ const BookDetail = () => {
                 </div>
                 <div className='comment-section'>
     <h3>코멘트</h3>
-    <button className="comment-button" onClick={() => setShowCommentModal(true)}>👉 코멘트 달기 </button>
+    {isSignedIn && <button className="comment-button" onClick={() => setShowCommentModal(true)}>👉 코멘트 달기 </button>} {/* 로그인한 사용자에게만 보이도록 변경 */}
     {comments && comments.length > 0 ? (
         comments.slice(0, visibleComments).map((comment, index) => (
-            <div key={index} className='comment-box' style={{ textAlign: 'center' }}>
-                <div className="comment-info" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <img src={comment.memberProfileImg} style={{ width: '30px', height: '30px', borderRadius: '50%' }} alt={`${comment.memberName}'s profile`} />
-                    <span className="member-name" style={{ marginLeft: '10px' }}>{comment.memberName}</span>
-                </div>
-                <span>{comment.content}</span>
+            <div key={index} className="comment-box">
+                <CommentBox
+                    comment={comment}
+                    onEdit={handleEditComment}
+                    isSignedIn={isSignedIn}
+                />
                 <div className="like-section">
                     <button className={`like-button ${likedComments.includes(comment.id) ? 'heart-active' : ''}`} onClick={() => handleLike(comment.id, likedComments.includes(comment.id))}>
                         <i className={`fas fa-heart ${likedComments.includes(comment.id) ? 'liked' : ''}`}></i>
@@ -379,16 +452,18 @@ const BookDetail = () => {
             </div>
         ))
     ) : (
-<div class="comment-container01">
-    코멘트가 없습니다.
-</div>    )}
-    {comments.length > visibleComments && (
-        <button className="more-button" onClick={handleShowAllComments}>더 보기</button>
+        <div className="comment-container01">
+            코멘트가 없습니다.
+        </div>
     )}
-</div>
-{showCommentModal && <CommentModal onClose={handleCloseCommentModal} accessToken={accessToken} isbn={isbn} memberId={memberId} />}
-</div>
-{showModal && <LoginModal onClose={handleCloseModal} />}
+
+        {comments.length > visibleComments && (
+            <button className="more-button" onClick={handleShowAllComments}>더 보기</button>
+        )}
+    </div>
+                {showCommentModal && <CommentModal onClose={handleCloseCommentModal} accessToken={accessToken} isbn={isbn} memberId={memberId} />}
+            </div>
+            {showModal && <LoginModal onClose={handleCloseModal} />}
             {showAllCommentsModal && <CommentPage comments={comments} onClose={handleCloseAllCommentsModal} />}
         </div>
     );

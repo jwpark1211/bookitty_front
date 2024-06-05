@@ -8,9 +8,8 @@ const StarRating = ({ value, setValue, onRatingSubmit, isSignedIn }) => {
     const stars = [1, 2, 3, 4, 5];
 
     const handleChange = (event, star) => {
-        const newValue = Number(event.target.value);
         if (isSignedIn) {
-            if (newValue === value) {
+            if (star === value) {
                 // 현재 값과 같은 값을 선택했을 때는 평점을 삭제한다.
                 setValue(0);
                 onRatingSubmit(0); // 평점 삭제를 위해 0을 전달

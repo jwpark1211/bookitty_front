@@ -47,6 +47,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
                 sessionStorage.setItem('memberId', memberId);
                 sessionStorage.setItem('profileImg', profileImg); // 오타 수정
                 sessionStorage.setItem('name', name);
+                sessionStorage.setItem('email', email);
     
                 setIsLoggedIn(true);
                 setIsLoggedInMessage(true);

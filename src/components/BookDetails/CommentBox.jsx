@@ -5,8 +5,10 @@ const CommentBox = ({ comment, onEdit, onDelete, isSignedIn}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedComment, setEditedComment] = useState(comment.content);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const memberId = sessionStorage.getItem('memberId') || '';
+    const memberId = Number(sessionStorage.getItem('memberId')) || '';
 
+    console.log("memberId : " , memberId);
+    console.log("comment.memberId : " ,comment.memberId);
 
     const handleEditClick = () => {
         if (isSignedIn && comment.memberId === memberId) {
@@ -50,7 +52,7 @@ const CommentBox = ({ comment, onEdit, onDelete, isSignedIn}) => {
                 )}
             </div>
             <div className="actions">
-                {isSignedIn && comment.memberId === memberId && (
+                {(isSignedIn && comment.memberId === memberId) && (
                     <>
                         {isEditing ? (
                             <button 

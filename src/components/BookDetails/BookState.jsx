@@ -79,7 +79,7 @@ const BookState = ({ isbn, bookState }) => {
       console.log('Error adding state:', error);
     }
   };
-/*
+
   const handleUpdateState = async (state) => {
     console.log(`Updating state: state=${state}, stateId=${stateId}`);
     try {
@@ -91,7 +91,7 @@ const BookState = ({ isbn, bookState }) => {
       console.log('Error updating state:', error);
     }
   };
-*/
+
 
   const handleDeleteState = async () => {
     console.log(`Deleting state: stateId=${stateId}`);
@@ -118,7 +118,7 @@ const BookState = ({ isbn, bookState }) => {
       handleDeleteState();
     } else {
       if (stateId) {
-        handleAddState(newState);
+        handleUpdateState(newState);
       } else {
         handleAddState(newState);
       }

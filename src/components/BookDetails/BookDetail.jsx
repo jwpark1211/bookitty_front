@@ -41,6 +41,23 @@ const BookDetail = () => {
         setShowCommentModal(false);
     };
 
+    const handleDeleteComment = async (commentId) => {
+        try {
+            const deleteCommentUrl = `http://43.201.231.40:8080/comment/${commentId}`;
+            await axios.delete(deleteCommentUrl, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
+
+            const updatedComments = comments.filter(comment => comment.id !== commentId);
+            setComments(updatedComments);
+            console.log('Comment deleted successfully');
+        } catch (error) {
+            console.error('Failed to delete comment:', error);
+        }
+    };
+
     const handleEditComment = async (commentId, editedContent) => {
         try {
             const editCommentUrl = `http://43.201.231.40:8080/comment/${commentId}`;
@@ -442,6 +459,7 @@ const BookDetail = () => {
                 <CommentBox
                     comment={comment}
                     onEdit={handleEditComment}
+                    onDelete={handleDeleteComment}
                     isSignedIn={isSignedIn}
                 />
                 <div className="like-section">

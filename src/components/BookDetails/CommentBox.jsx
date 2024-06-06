@@ -1,18 +1,37 @@
 import React, { useState } from 'react';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
-const CommentBox = ({ comment, onEdit, isSignedIn }) => {
+const CommentBox = ({ comment, onEdit, onDelete, isSignedIn}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedComment, setEditedComment] = useState(comment.content);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const memberId = sessionStorage.getItem('memberId') || '';
+
 
     const handleEditClick = () => {
-        if (isSignedIn) {
+        if (isSignedIn && comment.memberId === memberId) {
             setIsEditing(true);
-        } 
+        }
     };
 
     const handleSaveEdit = () => {
         onEdit(comment.id, editedComment);
         setIsEditing(false);
+    };
+
+    const handleDeleteClick = () => {
+        if (isSignedIn && comment.memberId === memberId) {
+            setShowDeleteModal(true);
+        }
+    };
+
+    const handleConfirmDelete = () => {
+        onDelete(comment.id);
+        setShowDeleteModal(false);
+    };
+
+    const handleCloseDeleteModal = () => {
+        setShowDeleteModal(false);
     };
 
     return (
@@ -31,32 +50,54 @@ const CommentBox = ({ comment, onEdit, isSignedIn }) => {
                 )}
             </div>
             <div className="actions">
-                {isEditing ? (
-                    <button 
-                        onClick={handleSaveEdit} 
-                        style={{ 
-                            backgroundColor: 'transparent', 
-                            color: 'white', 
-                            border: 'none', 
-                            cursor: 'pointer' 
-                        }}
-                    >
-                        저장
-                    </button>
-                ) : (
-                    <button 
-                        onClick={handleEditClick} 
-                        style={{ 
-                            backgroundColor: 'transparent', 
-                            color: 'white', 
-                            border: 'none', 
-                            cursor: 'pointer'
-                        }}
-                    >
-                        수정
-                    </button>
+                {isSignedIn && comment.memberId === memberId && (
+                    <>
+                        {isEditing ? (
+                            <button 
+                                onClick={handleSaveEdit} 
+                                style={{ 
+                                    backgroundColor: 'transparent', 
+                                    color: 'white', 
+                                    border: 'none', 
+                                    cursor: 'pointer' 
+                                }}
+                            >
+                                저장
+                            </button>
+                        ) : (
+                            <button 
+                                onClick={handleEditClick} 
+                                style={{ 
+                                    backgroundColor: 'transparent', 
+                                    color: 'white', 
+                                    border: 'none', 
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                수정
+                            </button>
+                        )}
+                        <button 
+                            onClick={handleDeleteClick} 
+                            style={{ 
+                                backgroundColor: 'transparent', 
+                                color: 'white', 
+                                border: 'none', 
+                                cursor: 'pointer',
+                                marginLeft: '10px'
+                            }}
+                        >
+                            삭제
+                        </button>
+                    </>
                 )}
             </div>
+            {showDeleteModal && (
+                <ConfirmDeleteModal
+                    onClose={handleCloseDeleteModal}
+                    onConfirm={handleConfirmDelete}
+                />
+            )}
         </div>
     );
 };

@@ -261,7 +261,7 @@ const MyPage = () => {
             onClick={() => setCurrentFilter('READING')}
             style={{textDecoration: 'none'}}
         >
-            읽고 싶은 책
+            읽는 중 
         </button>
         <button
             className={`filter-button ${currentFilter === 'WANT_TO_READ' ? 'active' : ''}`}
@@ -274,8 +274,8 @@ const MyPage = () => {
     <div className="book-list">
     {filteredBooks.length > 0 ? (
         filteredBooks.map((book, index) => (
-            <div key={index} className="book-item">
-                <img src={book.bookImgUrl} className="book-image03" alt="book cover" style={{ borderRadius: '20px' }} />
+            <div key={index} className="book-item01">
+                <img src={book.bookImgUrl} className="book-image03" alt="book cover01" style={{ borderRadius: '20px' }} />
                 <p><a href={`/book/${book.isbn}`} style={{ textDecoration: 'none', color: 'inherit' }}>{book.bookTitle}</a></p>
                 <p style={{ fontWeight: '100', fontSize: '13px', color: 'grey' }}>{book.bookAuthor}</p>
             </div>

@@ -454,7 +454,8 @@ const BookDetail = () => {
     <h3>코멘트</h3>
     {isSignedIn && <button className="comment-button" onClick={() => setShowCommentModal(true)}>👉 코멘트 달기 </button>} {/* 로그인한 사용자에게만 보이도록 변경 */}
     {comments && comments.length > 0 ? (
-        comments.slice(0, visibleComments).map((comment, index) => (
+        comments.slice(0, visibleComments).map((comment, index) => {
+            return (
             <div key={index} className="comment-box">
                 <CommentBox
                     comment={comment}
@@ -468,7 +469,7 @@ const BookDetail = () => {
                     </button>
                 </div>
             </div>
-        ))
+        )})
     ) : (
         <div className="comment-container01">
             코멘트가 없습니다.

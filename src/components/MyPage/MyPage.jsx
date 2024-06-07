@@ -225,16 +225,19 @@ const MyPage = () => {
             </div>
 
             <div className="category-stats-section">
-                <h3>도서 분류</h3>
+            <h3>도서 분류</h3>
                 <Doughnut
                     data={{
-                        labels: Object.keys(categoryStats),
+                        //labels: Object.keys(categoryStats),
+                        labels: ["문학","인문학","경영/경제","자기계발","컴퓨터/과학","그 외"],
                         datasets: [{
                             data: Object.values(categoryStats),
-                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-                        }]
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF','#e5e5e5'],
+                            borderWidth: 0,
+                        }],   
                     }}
                 />
+
             </div>
 
             <div className="bottom-divider"></div>

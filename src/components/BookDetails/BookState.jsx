@@ -3,22 +3,20 @@ import axios from 'axios';
 import LoginModal from './LoginModal';
 import './BookState.css';
 
-const BookState = ({ isbn, bookState }) => {
-  const [activeButton, setActiveButton] = useState(bookState);
+const BookState = ({ isbn }) => {
+  const [activeButton, setActiveButton] = useState(null);
   const [stateId, setStateId] = useState(null);
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const accessToken = sessionStorage.getItem('accessToken');
-  const [bookStates, setBookStates] = useState([]);
   const memberId = sessionStorage.getItem('memberId');
   const [book, setBook] = useState(null);
 
   useEffect(() => {
     const loginStatus = sessionStorage.getItem('login');
     setIsSignedIn(!!loginStatus);
-    console.log("Login status:", !!loginStatus);
-    fetchBookStates();
     fetchBookDetails();
+    fetchCurrentState();
   }, []);
 
   const handleCloseLoginModal = () => {
@@ -28,34 +26,9 @@ const BookState = ({ isbn, bookState }) => {
   const baseURL = 'http://43.201.231.40:8080';
   const headers = { 'Authorization': `Bearer ${accessToken}` };
 
-  const fetchStateId = async (state) => {
-    const stateUrl = `${baseURL}/state/new`;
-    try {
-      console.log('Requesting state ID for state:', state);
-      console.log('Request JSON:', JSON.stringify({ isbn, memberId, state, categoryName: book.categoryName, bookTitle: book.title, bookAuthor: book.author, bookImgUrl: book.cover }));
-      const response = await axios.post(stateUrl, { isbn, memberId, state, categoryName: book.categoryName, bookTitle: book.title, bookAuthor: book.author, bookImgUrl: book.cover }, { headers });
-      console.log('Response for state ID request:', response.data);
-      return response.data.data.id;
-    } catch (error) {
-      console.error('Error fetching state ID:', error);
-      throw new Error('Failed to fetch state ID');
-    }
-  };
-
-  const fetchBookStates = async () => {
-    const statesUrl = `${baseURL}/state/isbn/${isbn}`;
-    try {
-      const response = await axios.get(statesUrl, { headers });
-      setBookStates(response.data);
-      console.log('Book states:', response.data);
-    } catch (error) {
-      console.error('Error fetching book states:', error);
-    }
-  };
-
   const fetchBookDetails = async () => {
     try {
-      const apiUrl = `http://43.201.231.40:8080/open/search/book/${isbn}`;
+      const apiUrl = `${baseURL}/open/search/book/${isbn}`;
       const response = await axios.get(apiUrl);
       if (response.data && response.data.item && response.data.item.length > 0) {
         setBook(response.data.item[0]);
@@ -67,49 +40,74 @@ const BookState = ({ isbn, bookState }) => {
     }
   };
 
-  const handleAddState = async (state) => {
-    console.log("Adding state:", state);
+  const fetchCurrentState = async () => {
     try {
-      console.log('Sending request to add state:', state);
-      const stateId = await fetchStateId(state);
-      setStateId(stateId);
-      setActiveButton(state);
-      console.log('State added successfully. ID:', stateId);
+      const response = await axios.get(`${baseURL}/state/isbn/${isbn}/member/${memberId}`, { headers });
+      if (response.data && response.data.data.state) {
+        setActiveButton(response.data.data.state);
+        setStateId(response.data.data.id);
+      }
     } catch (error) {
-      console.log('Error adding state:', error);
+      if (error.response && error.response.status === 404) {
+        console.log('No current state found for the book.');
+        setActiveButton(null);
+        setStateId(null);
+      } else {
+        console.error('Error fetching current state:', error);
+      }
+    }
+  };
+
+  const fetchStateId = async (state) => {
+    try {
+      const stateUrl = `${baseURL}/state/new`;
+      const response = await axios.post(stateUrl, {
+        isbn,
+        memberId,
+        state,
+        categoryName: book.categoryName,
+        bookTitle: book.title,
+        bookAuthor: book.author,
+        bookImgUrl: book.cover
+      }, { headers });
+      return response.data.data.id;
+    } catch (error) {
+      console.error('Error fetching state ID:', error);
+      throw new Error('Failed to fetch state ID');
+    }
+  };
+
+  const handleAddState = async (state) => {
+    try {
+      const newStateId = await fetchStateId(state);
+      setActiveButton(state);
+      setStateId(newStateId);
+    } catch (error) {
+      console.error('Error adding state:', error);
     }
   };
 
   const handleUpdateState = async (state) => {
-    console.log(`Updating state: state=${state}, stateId=${stateId}`);
     try {
-      console.log('Sending request to update state:', state);
       await axios.patch(`${baseURL}/state/${stateId}`, { state }, { headers });
       setActiveButton(state);
-      console.log('State updated successfully', state);
     } catch (error) {
-      console.log('Error updating state:', error);
+      console.error('Error updating state:', error);
     }
   };
 
-
   const handleDeleteState = async () => {
-    console.log(`Deleting state: stateId=${stateId}`);
     try {
-      console.log('Sending request to delete state:', stateId);
       await axios.delete(`${baseURL}/state/${stateId}`, { headers });
       setActiveButton(null);
       setStateId(null);
-      console.log('State deleted successfully');
     } catch (error) {
-      console.log('Error deleting state:', error);
+      console.error('Error deleting state:', error);
     }
   };
 
   const handleStateChange = async (newState) => {
-    console.log("New state:", newState);
     if (!isSignedIn) {
-      console.log("User is not signed in.");
       setShowLoginModal(true);
       return;
     }
@@ -126,7 +124,7 @@ const BookState = ({ isbn, bookState }) => {
   };
 
   return (
-    <div>
+    <div className="book-state-container">
       <button
         className={`button ${activeButton === 'READ_ALREADY' ? 'active' : ''}`}
         onClick={() => handleStateChange('READ_ALREADY')}

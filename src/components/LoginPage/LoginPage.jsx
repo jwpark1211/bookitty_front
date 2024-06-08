@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
 import './LoginPage.css';
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 const LoginPage = ({ setIsLoggedIn }) => {
     const [email, setEmail] = useState("");
@@ -17,21 +17,20 @@ const LoginPage = ({ setIsLoggedIn }) => {
             setIsLoggedIn(true);
         }
     }, [setIsLoggedIn]);
-    
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://43.201.231.40:8080/members/login', {
+            const response = await axiosInstance.post('/members/login', {
                 email: email,
                 password: password
             });
-    
+
             console.log('Full server response:', response.data);
-    
+
             if (response.status === 200) {
                 const { jwtToken, idx: memberId, profileImg, name } = response.data.data;
                 const { accessToken, refreshToken } = jwtToken;
-    
+
                 console.log('Extracted data:', {
                     jwtToken,
                     memberId,
@@ -40,20 +39,20 @@ const LoginPage = ({ setIsLoggedIn }) => {
                     profileImg,
                     name
                 });
-    
+
                 sessionStorage.setItem('login', 'true');
                 sessionStorage.setItem('accessToken', accessToken);
                 sessionStorage.setItem('refreshToken', refreshToken);
                 sessionStorage.setItem('memberId', memberId);
-                sessionStorage.setItem('profileImg', profileImg); // 오타 수정
+                sessionStorage.setItem('profileImg', profileImg);
                 sessionStorage.setItem('name', name);
                 sessionStorage.setItem('email', email);
-    
+
                 setIsLoggedIn(true);
                 setIsLoggedInMessage(true);
-    
+
                 console.log('Email:', email);
-    
+
                 setTimeout(() => {
                     setIsLoggedInMessage(false);
                     navigate('/');
@@ -66,7 +65,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
             setError("로그인 중 오류가 발생했습니다.");
         }
     };
-    
+
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
     };

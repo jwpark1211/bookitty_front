@@ -427,7 +427,7 @@ const BookDetail = () => {
                 <h5 className="book-price">정가 {book.priceStandard}원</h5>
                 <a href={book.link} className="book-link" target="_blank" rel="noopener noreferrer">알라딘에서 보기</a>
                 <div className='BookState'>
-                    <BookState memberId={memberId} isbn={isbn} />
+                    <BookState memberId={memberId} isbn={book.isbn13} />
                 </div>
 
                 <div className="book-ratings">

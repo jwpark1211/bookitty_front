@@ -1,34 +1,54 @@
 .header02 {
-    display : flex;
-    justify-content : space-between;
-    align-items : center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: black;
-    padding : 10px 20px;
-}
-
-.logo-container {
+    padding: 10px 20px;
+  }
+  
+  .logo-container {
     display: flex;
     align-items: center;
-}
-
-.logo {
+  }
+  
+  .logo {
     height: 40px;
-}
-
-.user-container {
+  }
+  
+  .user-container {
     display: flex;
     align-items: center;
-}
-
-.profile-pic {
+  }
+  
+  .user-profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-pic {
     width: 30px;
     height: 30px;
-    border-radius: 50%; 
-    margin-right: 10px; 
+    border-radius: 50%;
+    margin-left: 10px; /* 로그아웃 버튼과의 간격 추가 */
   }
   
   .user-nickname {
-    text-decoration: none; 
+    text-decoration: none;
     color: white;
+    margin-left: 10px; /* 프로필 이미지와 닉네임 사이의 간격 추가 */
+  }
+  
+  .logout-button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px; /* 프로필 이미지와 간격 추가 */
+  }
+  
+  .logout-button:hover {
+    opacity: 0.8;
   }
   

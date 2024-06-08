@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './StarRating.css';
 import LoginModal from './LoginModal';
-import CommentBox from './CommentBox';
 
 const StarRating = ({ value, setValue, onRatingSubmit, isSignedIn }) => {
     const [showLoginModal, setShowLoginModal] = useState(false);
@@ -10,9 +9,9 @@ const StarRating = ({ value, setValue, onRatingSubmit, isSignedIn }) => {
     const handleChange = (event, star) => {
         if (isSignedIn) {
             if (star === value) {
-                // 현재 값과 같은 값을 선택했을 때는 평점을 삭제한다.
+                // If the same value is selected again, remove the rating.
                 setValue(0);
-                onRatingSubmit(0); // 평점 삭제를 위해 0을 전달
+                onRatingSubmit(0); // Pass 0 to remove the rating
             } else {
                 setValue(star);
                 onRatingSubmit(star);

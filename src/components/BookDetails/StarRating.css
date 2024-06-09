@@ -21,18 +21,18 @@
 .star-rating label:before {
   content: "\2605";
   font-size: 24px;
-  color: #f90;
+  /* color: #f90; */
 }
 
-.star-rating input[type="radio"]:checked ~ label:before {
+/* .star-rating input[type=radio]:checked ~ label:before {
   content: "\2605";
   color: #ccc;
 }
 
-.star-rating input[type="radio"]:checked ~ label:not(:hover) {
+.star-rating input[type=radio]:checked ~ label:not(:hover) {
   color: transparent; 
 }
 
-.star-rating input[type="radio"]:checked + label {
+.star-rating input[type=radio]:checked + label {
   color: #f90; 
-}
+} */

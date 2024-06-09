@@ -6,36 +6,42 @@ const StarRating = ({ value, setValue, onRatingSubmit, isSignedIn }) => {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const stars = [1, 2, 3, 4, 5];
 
-    const handleChange = (event, star) => {
+    
+
+    const handleClick = (e) => {
+        const clickedStar = Number(e.target.value);
+
         if (isSignedIn) {
-            if (star === value) {
-                // If the same value is selected again, remove the rating.
+            if (clickedStar === value) {
                 setValue(0);
-                onRatingSubmit(0); // Pass 0 to remove the rating
+                onRatingSubmit(0); // 0을 전달하여 평점 삭제
             } else {
-                setValue(star);
-                onRatingSubmit(star);
+                setValue(clickedStar);
+                onRatingSubmit(clickedStar);
             }
         } else {
             setShowLoginModal(true);
         }
-    };
+    }
 
     return (
         <div className="star-rating">
-            {stars.map((star) => (
-                <React.Fragment key={star}>
+            {stars.map((star) => {
+                const isChecked = star <= value;
+                return(
+                    <React.Fragment key={star}>
                     <input
                         type="radio"
                         id={`star${star}`}
                         name="rating"
                         value={star}
-                        checked={star === value}
-                        onChange={(event) => handleChange(event, star)}
+                        checked={isChecked}
+                        onClick={handleClick}
                     />
-                    <label htmlFor={`star${star}`} className={star <= value ? 'filled' : ''}></label>
+                    <label htmlFor={`star${star}`} style={isChecked ? {color:"#f90"}:{color:"#ccc"}}/>
                 </React.Fragment>
-            ))}
+                )
+            })}
             {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} />}
         </div>
     );

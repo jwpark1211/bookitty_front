@@ -188,12 +188,53 @@ const BookDetail = () => {
             return;
         }
     
+        const existingRating = ratings.find(rating => rating.memberId === memberId);
+    
+        // 평점이 0점이면 평점을 삭제
+        if (ratingValue === 0 && existingRating) {
+            const deleteRatingUrl = `http://43.201.231.40:8080/star/${existingRating.id}`;
+
+            let token = accessToken;
+    
+            try {
+                await axios.delete(deleteRatingUrl, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+    
+                const updatedRatings = ratings.filter(rating => rating.id !== existingRating.id);
+                setRatings(updatedRatings);
+                setUserRating(0); // Reset user rating
+                console.log('Rating deleted successfully');
+            } catch (error) {
+                if (error.response && error.response.status === 401) {
+                    try {
+                        token = await refreshAccessToken();
+                        await axios.delete(deleteRatingUrl, {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            }
+                        });
+    
+                        const updatedRatings = ratings.filter(rating => rating.id !== existingRating.id);
+                        setRatings(updatedRatings);
+                        setUserRating(0); // Reset user rating
+                        console.log('Rating deleted successfully');
+                    } catch (refreshError) {
+                        console.error('Error:', refreshError);
+                    }
+                } else {
+                    console.error('Error:', error);
+                }
+            }
+            return;
+        }
+    
         const submitRating = async () => {
-            const existingRating = ratings.find(rating => rating.memberId === memberId && rating.score === ratingValue);
             let token = accessToken;
     
             if (existingRating) {
-                // 이미 해당 점수에 대한 평가가 존재하면 수정
                 const patchRatingUrl = `http://43.201.231.40:8080/star/${existingRating.id}`;
                 console.log(patchRatingUrl);
                 try {
@@ -239,7 +280,6 @@ const BookDetail = () => {
                     }
                 }
             } else {
-                // 해당 점수에 대한 평가가 없으면 새로운 평가 생성
                 const ratingsUrl = `http://43.201.231.40:8080/star/new`;
                 try {
                     const response = await axios.post(
@@ -298,6 +338,8 @@ const BookDetail = () => {
     };
     
 
+
+
     const refreshAccessToken = async () => {
         try {
             const response = await axios.post('http://43.201.231.40:8080/auth/refresh', {
@@ -311,6 +353,8 @@ const BookDetail = () => {
             throw new Error('Failed to refresh access token');
         }
     };
+
+    
 
     const handleCommentSubmit = async () => {
         if (!isSignedIn) {

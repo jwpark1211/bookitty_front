@@ -190,10 +190,9 @@ const BookDetail = () => {
     
         const existingRating = ratings.find(rating => rating.memberId === memberId);
     
-        // 평점이 0점이면 평점을 삭제
-        if (ratingValue === 0 && existingRating) {
+        if (existingRating && ratingValue === existingRating.score) {
+            // 같은 평점 값 클릭 시 평점 삭제
             const deleteRatingUrl = `http://43.201.231.40:8080/star/${existingRating.id}`;
-
             let token = accessToken;
     
             try {
@@ -205,7 +204,7 @@ const BookDetail = () => {
     
                 const updatedRatings = ratings.filter(rating => rating.id !== existingRating.id);
                 setRatings(updatedRatings);
-                setUserRating(0); // Reset user rating
+                setUserRating(0); // 사용자 평점 초기화
                 console.log('Rating deleted successfully');
             } catch (error) {
                 if (error.response && error.response.status === 401) {
@@ -219,7 +218,7 @@ const BookDetail = () => {
     
                         const updatedRatings = ratings.filter(rating => rating.id !== existingRating.id);
                         setRatings(updatedRatings);
-                        setUserRating(0); // Reset user rating
+                        setUserRating(0); // 사용자 평점 초기화
                         console.log('Rating deleted successfully');
                     } catch (refreshError) {
                         console.error('Error:', refreshError);
@@ -228,114 +227,116 @@ const BookDetail = () => {
                     console.error('Error:', error);
                 }
             }
-            return;
-        }
+        } else {
+            // 다른 평점 값 클릭 시 평점 제출
+            const submitRating = async () => {
+                let token = accessToken;
     
-        const submitRating = async () => {
-            let token = accessToken;
-    
-            if (existingRating) {
-                const patchRatingUrl = `http://43.201.231.40:8080/star/${existingRating.id}`;
-                console.log(patchRatingUrl);
-                try {
-                    const response = await axios.patch(patchRatingUrl, { score: ratingValue }, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    });
-    
-                    const updatedRatings = ratings.map(rating => {
-                        if (rating.id === existingRating.id) {
-                            return { ...rating, score: ratingValue };
-                        }
-                        return rating;
-                    });
-    
-                    setRatings(updatedRatings);
-                    console.log('Rating updated successfully:', response.data); // 평점이 수정되었음을 콘솔에 기록
-                } catch (error) {
-                    if (error.response && error.response.status === 401) {
-                        try {
-                            token = await refreshAccessToken();
-                            const response = await axios.patch(patchRatingUrl, { score: ratingValue }, {
-                                headers: {
-                                    Authorization: `Bearer ${token}`
-                                }
-                            });
-    
-                            const updatedRatings = ratings.map(rating => {
-                                if (rating.id === existingRating.id) {
-                                    return { ...rating, score: ratingValue };
-                                }
-                                return rating;
-                            });
-    
-                            setRatings(updatedRatings);
-                            console.log('Rating updated successfully:', response.data); // 평점이 수정되었음을 콘솔에 기록
-                        } catch (refreshError) {
-                            console.error('Error:', refreshError);
-                        }
-                    } else {
-                        console.error('Error:', error);
-                    }
-                }
-            } else {
-                const ratingsUrl = `http://43.201.231.40:8080/star/new`;
-                try {
-                    const response = await axios.post(
-                        ratingsUrl,
-                        {
-                            isbn,
-                            memberId,
-                            score: ratingValue
-                        },
-                        {
+                if (existingRating) {
+                    const patchRatingUrl = `http://43.201.231.40:8080/star/${existingRating.id}`;
+                    try {
+                        const response = await axios.patch(patchRatingUrl, { score: ratingValue }, {
                             headers: {
-                                Authorization: `Bearer ${token}`
+                                Authorization: `Bearer ${token}`,
+                                'Content-Type': 'application/json'
                             }
-                        }
-                    );
+                        });
     
-                    setRatings([...ratings, { id: response.data.id, score: ratingValue, comment: '' }]);
-                    console.log('Rating submitted successfully:', response.data);
-                } catch (error) {
-                    if (error.response && error.response.status === 401) {
-                        try {
-                            token = await refreshAccessToken();
-                            const response = await axios.post(
-                                ratingsUrl,
-                                {
-                                    isbn,
-                                    memberId,
-                                    score: ratingValue
-                                },
-                                {
+                        const updatedRatings = ratings.map(rating => {
+                            if (rating.id === existingRating.id) {
+                                return { ...rating, score: ratingValue };
+                            }
+                            return rating;
+                        });
+    
+                        setRatings(updatedRatings);
+                        console.log('Rating updated successfully:', response.data);
+                    } catch (error) {
+                        if (error.response && error.response.status === 401) {
+                            try {
+                                token = await refreshAccessToken();
+                                const response = await axios.patch(patchRatingUrl, { score: ratingValue }, {
                                     headers: {
                                         Authorization: `Bearer ${token}`
                                     }
-                                }
-                            );
+                                });
     
-                            setRatings([...ratings, { id: response.data.id, score: ratingValue, comment: '' }]);
-                            console.log('Rating submitted successfully:', response.data);
-                        } catch (refreshError) {
-                            console.error('Error:', refreshError);
+                                const updatedRatings = ratings.map(rating => {
+                                    if (rating.id === existingRating.id) {
+                                        return { ...rating, score: ratingValue };
+                                    }
+                                    return rating;
+                                });
+    
+                                setRatings(updatedRatings);
+                                console.log('Rating updated successfully:', response.data);
+                            } catch (refreshError) {
+                                console.error('Error:', refreshError);
+                            }
+                        } else {
+                            console.error('Error:', error.response ? error.response.data : error.message);
                         }
-                    } else {
-                        console.error('Error:', error);
+                    }
+                } else {
+                    const ratingsUrl = `http://43.201.231.40:8080/star/new`;
+                    try {
+                        const response = await axios.post(
+                            ratingsUrl,
+                            {
+                                isbn,
+                                memberId,
+                                score: ratingValue
+                            },
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${token}`
+                                }
+                            }
+                        );
+    
+                        setRatings([...ratings, { id: response.data.id, score: ratingValue, comment: '' }]);
+                        console.log('Rating submitted successfully:', response.data);
+                    } catch (error) {
+                        if (error.response && error.response.status === 401) {
+                            try {
+                                token = await refreshAccessToken();
+                                const response = await axios.post(
+                                    ratingsUrl,
+                                    {
+                                        isbn,
+                                        memberId,
+                                        score: ratingValue
+                                    },
+                                    {
+                                        headers: {
+                                            Authorization: `Bearer ${token}`
+                                        }
+                                    }
+                                );
+    
+                                setRatings([...ratings, { id: response.data.id, score: ratingValue, comment: '' }]);
+                                console.log('Rating submitted successfully:', response.data);
+                            } catch (refreshError) {
+                                console.error('Error:', refreshError);
+                            }
+                        } else {
+                            console.error('Error:', error.response ? error.response.data : error.message);
+                        }
                     }
                 }
-            }
-        };
+            };
     
-        try {
-            await submitRating();
-            setUserRating(ratingValue);
-            console.log(`평점이 제출되었습니다: ${ratingValue} 점`);
-        } catch (error) {
-            console.error('Failed to submit rating:', error);
+            try {
+                await submitRating();
+                setUserRating(ratingValue);
+                console.log(`Rating submitted: ${ratingValue} stars`);
+            } catch (error) {
+                console.error('Failed to submit rating:', error);
+            }
         }
     };
+    
+    
     
 
 

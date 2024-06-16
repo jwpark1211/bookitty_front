@@ -10,22 +10,31 @@
     align-items: center;
 }
 
-.comment-page-content {
+.modal-content-page {
     background: black;
     padding: 20px;
     border-radius: 8px;
-    width: 80%;
-    max-width: 600px;
+    width: 90%; 
+    max-width: 800px; /* 모달 최대 너비 설정 */
     max-height: 80%;
     overflow-y: auto;
+    color: white;
+    position: relative;
+}
+
+.modal-content h2 {
+    margin-top: 0;
 }
 
 .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
     background: none;
     border: none;
     font-size: 18px;
     cursor: pointer;
+    color: white;
+    padding: 40px;
+}
+
+.comment-list {
+    margin-top: 20px;
 }

@@ -257,8 +257,6 @@ const SecondScreen = () => {
                     </div>
                 ))}
             </Slider>
-
-
 </div>
     );
 }

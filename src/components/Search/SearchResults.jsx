@@ -30,7 +30,7 @@ const SearchResults = () => {
 
     return (
         <div className="search-results">
-            <h4>"{searchParams.get("term")}"에 대한 검색 결과</h4>
+            <h4>"{searchParams.get("term")}" 에 대한 검색 결과</h4>
             <div className="book-container">
                 {searchResults && searchResults.length > 0 ? (
                     searchResults.map((result, index) => (

@@ -1,11 +1,13 @@
+.star-rating-container {
+  text-align: center;
+}
+
 .star-rating {
   font-size: 0;
   white-space: nowrap;
   display: inline-block;
   vertical-align: middle;
   text-align: center;
-
-
 }
 
 .star-rating input[type="radio"] {
@@ -21,18 +23,62 @@
 .star-rating label:before {
   content: "\2605";
   font-size: 24px;
-  /* color: #f90; */
+  color: #ccc; /* Default color for stars */
 }
 
-/* .star-rating input[type=radio]:checked ~ label:before {
-  content: "\2605";
-  color: #ccc;
+.star-rating label.filled:before {
+  color: #d300ff; /* Color for selected stars */
 }
 
-.star-rating input[type=radio]:checked ~ label:not(:hover) {
-  color: transparent; 
+.average-rating {
+  text-align: center;
 }
 
-.star-rating input[type=radio]:checked + label {
-  color: #f90; 
-} */
+.delete-container {
+  margin-top: 10px;
+}
+
+.delete-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.book-ratings {
+  margin-top: 150px;
+  margin-right: 500px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.average-rating {
+  font-size : 50px;
+  font-weight: bold;
+}
+
+.rating-statistics {
+  margin-top: 20px;
+  margin-bottom: 200px;
+}
+
+.rating-statistics-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.rating-statistics-bar .bar {
+  height: 20px;
+  background-color: #d300ff;
+  margin: 0 10px;
+  border-radius: 10px;
+  height : 13px;
+}

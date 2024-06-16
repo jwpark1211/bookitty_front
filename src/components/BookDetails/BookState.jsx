@@ -124,25 +124,22 @@ const BookState = ({ isbn }) => {
   };
 
   return (
-    <div className="book-state-container">
-      <button
-        className={`button ${activeButton === 'READ_ALREADY' ? 'active' : ''}`}
-        onClick={() => handleStateChange('READ_ALREADY')}
-      >
-        읽음
-      </button>
-      <button
-        className={`button ${activeButton === 'WANT_TO_READ' ? 'active' : ''}`}
-        onClick={() => handleStateChange('WANT_TO_READ')}
-      >
-        읽고 싶어요
-      </button>
-      <button
-        className={`button ${activeButton === 'READING' ? 'active' : ''}`}
-        onClick={() => handleStateChange('READING')}
-      >
-        읽는 중
-      </button>
+    <div className="button-container">
+        <div className="button-wrapper">
+            <button className={`button ${activeButton === 'WANT_TO_READ' ? 'active' : ''}`} onClick={() => handleStateChange('WANT_TO_READ')}>
+                읽고 싶어요
+            </button>
+        </div>
+        <div className="button-wrapper">
+            <button className={`button ${activeButton === 'READING' ? 'active' : ''}`} onClick={() => handleStateChange('READING')}>
+              &nbsp;&nbsp;읽는 중  
+            </button>
+        </div>
+        <div className="button-wrapper">
+            <button className={`button ${activeButton === 'READ_ALREADY' ? 'active' : ''}`} onClick={() => handleStateChange('READ_ALREADY')}>
+                읽음
+            </button>
+        </div>
       {!isSignedIn && showLoginModal && <LoginModal onClose={handleCloseLoginModal} />}
     </div>
   );

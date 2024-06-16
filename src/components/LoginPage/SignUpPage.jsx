@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import logo from './logo.svg';
+import logo from './logo.svg'; // Assuming a separate logo for the header
 import './SignUpPage.css';
 import axios from 'axios';
 
@@ -66,7 +66,6 @@ const SignUpPage = ({ setIsSignIn }) => {
             setError("올바른 이메일 형식이 아닙니다."); 
         }
     };
-    
 
     const handlePasswordChange = (e) => {
         const newPassword = e.target.value;
@@ -79,7 +78,6 @@ const SignUpPage = ({ setIsSignIn }) => {
             setError(""); 
         }
     };
-    
 
     const handleConfirmPasswordChange = (e) => {
         setConfirmPassword(e.target.value);
@@ -115,9 +113,9 @@ const SignUpPage = ({ setIsSignIn }) => {
     
     return (
         <div className="sign-up-page">
-            <div className="logo-container_2">
-                <img src={logo} alt="로고" className="logo" />
-                <div className="input-container">
+            <img src={logo} alt="로고" className="logo01" />
+            <div className="form-container">
+                <div className="form-group">
                     <label className="label-text">이메일</label>
                     <div className="email-input-container">
                         <input
@@ -127,8 +125,25 @@ const SignUpPage = ({ setIsSignIn }) => {
                             placeholder="이메일을 입력"
                             className="email-input01"
                         />
+                        <button onClick={handleCheckEmailAvailability} className="check-email-button">중복확인</button>
                     </div>
-                    <button onClick={handleCheckEmailAvailability} className="check-email-button">중복확인</button>
+                    <label className="label-text">비밀번호</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={handlePasswordChange}
+                        placeholder="대소문자와 특수기호를 포함하여 8자 이상"
+                        className="password-input"
+                    />
+                    <label className="label-text">생년월일</label>
+                    <input
+                        type="date"
+                        value={birthdate}
+                        onChange={handleBirthdateChange}
+                        className="birthdate-input"
+                    />
+                </div>
+                <div className="form-group">
                     <label className="label-text">이름</label>
                     <input
                         type="text"
@@ -137,17 +152,7 @@ const SignUpPage = ({ setIsSignIn }) => {
                         placeholder="이름을 입력"
                         className="name-input"
                     />
-                </div>
-                <div className="input-container02">
-                    <label className="label-text02">비밀번호</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        placeholder="대소문자와 특수기호를 포함하여 8자 이상"
-                        className="password-input"
-                    />
-                    <label className="label-text03">비밀번호 확인</label>
+                    <label className="label-text">비밀번호 확인</label>
                     <input
                         type="password"
                         value={confirmPassword}
@@ -155,16 +160,7 @@ const SignUpPage = ({ setIsSignIn }) => {
                         placeholder="비밀번호 재입력"
                         className="password-input02"
                     />
-                </div>
-                <div className="input-container03">
-                    <label className="label-text02">생년월일</label>
-                    <input
-                        type="date"
-                        value={birthdate}
-                        onChange={handleBirthdateChange}
-                        className="birthdate-input"
-                    />
-                    <label className="label-text03">성별</label>
+                    <label className="label-text">성별</label>
                     <div className="gender-buttons">
                         <button
                             className={`gender-button ${gender === 'MALE' ? 'selected' : ''}`}
@@ -180,9 +176,9 @@ const SignUpPage = ({ setIsSignIn }) => {
                         </button>
                     </div>
                 </div>
-                {error && <p className="error-message white">{error}</p>} 
-                <button onClick={handleSignUp} className="signup-button01">회원가입</button>
             </div>
+            {error && <p className="error-message white">{error}</p>} 
+            <button onClick={handleSignUp} className="signup-button01">회원가입</button>
         </div>
     );
 }

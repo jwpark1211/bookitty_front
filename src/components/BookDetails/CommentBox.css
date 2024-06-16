@@ -1,49 +1,51 @@
 .comment-box {
+    border: 1px solid #353535;
+    padding: 10px;
     margin-bottom: 20px;
-  }
-  
-  .comment-content {
-    position: relative;
-  }
-  
-/* CommentBox.css */
-.edit-button {
-    background-color: black; /* 버튼 배경색을 검정색으로 설정 */
-    color: white; /* 버튼 글씨색을 하얀색으로 설정 */
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.edit-button:hover {
-    background-color: #333; /* 호버 시 배경색을 약간 밝게 변경 */
-}
-
-  
-  .edit-comment textarea {
-    width: 100%;
-    min-height: 100px;
-    margin-bottom: 10px;
-  }
-  
-  .edit-buttons {
+    border-radius: 10px;
+    background-color: #353535;
     display: flex;
-    justify-content: flex-end;
-  }
-  
-  .save-button,
-  .cancel-button {
-    background-color: black; /* 저장 및 취소 버튼 배경색: 검정색 */
-    color: white; /* 저장 및 취소 버튼 텍스트 색상: 흰색 */
+    flex-direction: column;
+}
+
+.comment-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.comment-info img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.member-name {
+    margin-right: auto;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.comment-actions button {
+    background-color:transparent;
+    color: white;
     border: none;
-    padding: 5px 10px;
-    margin-left: 10px;
     cursor: pointer;
-  }
-  
-  .save-button:hover,
-  .cancel-button:hover {
-    background-color: darkgrey; /* 저장 및 취소 버튼 호버 배경색: 진회색 */
-  }
-  
+}
+
+.comment-actions .fas.fa-heart {
+    color: white;
+}
+
+.comment-actions .fas.fa-heart.liked {
+    color: red;
+}
+
+.comment-content {
+    margin-top: 5px;
+}

@@ -1,14 +1,49 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  font-family: Arial, sans-serif;
+} /* 컴퓨터 비율에 따라 화면 끝부분이 하얗게 변하는 문제 해결*/
+
 .book-detail {
   display: flex;
   background-color: black;
   color: white;
-  padding: 20px;
+  padding-left: 100px;
+  padding-top: 100px;
+  justify-content: center;
+  flex-direction: column;
+  width: 75%;
+  margin: 0 auto; /* 중앙 정렬 */
+}
+
+
+.book-info-details, .book-ratings, .comment-section {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.book-info-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.book-info {
+  display: flex;
+  flex-direction: column; /* 아이템들을 세로로 정렬 */
+  max-width: 700px;
+  justify-content: center;
+  margin-bottom : 5px;
 }
 
 .book-image {
   flex: 0 0 auto;
-  margin-right: 100px;
-  padding: 90px;
+  margin-right: 40px;
+  margin-left: 0px;
+  justify-content: center;
   transition: transform 0.3s ease; 
 }
 
@@ -23,18 +58,19 @@
 }
 
 .book-title01 {
-  font-size: 50px;
-  margin-bottom: 20px;
-  text-align: center;
-  padding: 80px;
+  font-size: 45px;
+  margin-bottom: 30px;
+  text-align: left;
+  animation: fadeIn 0.8s ease-in-out forwards;
 }
 
 .book-author01,
 .book-pubDate,
-.book-description, .book-link {
+.book-description {
   font-size: 17px;
   text-align: left;
   font-weight: normal;
+  margin-bottom: 3px;
 }
 
 .book-price {
@@ -43,10 +79,10 @@
   font-weight: bold;
 }
 
-.book-link {
-  text-align: left;
+.book-link01 {
   color : white;
   text-align: left;
+  margin-bottom: 5px;
 }
 
 @keyframes fadeIn {
@@ -60,73 +96,6 @@
   }
 }
 
-.book-title01 {
-  animation: fadeIn 0.8s ease-in-out forwards;
-}
-
-.book-ratings {
-  margin-top: 250px;
-  margin-right: 500px;
-}
-
-.BookState{
-  margin-top: 90px;
-  margin-right: 500px;
-}
-
-.average-rating {
-  font-size : 50px;
-  font-weight: bold;
-}
-
-.book-detail .rating-statistics {
-  margin-top: 20px;
-  margin-bottom: 200px;
-}
-
-.rating-statistics-bar {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.rating-statistics-bar .bar {
-  height: 20px;
-  background-color: #d300ff;
-  margin: 0 10px;
-  border-radius: 10px;
-  height : 13px;
-}
-
-.comment-section {
-  margin-right: 500px;
-  color : white;
-}
-
-.book-detail .comment-section {
-  margin-top: 20px;
-}
-
-.comment-box {
-  border: 1px solid #353535;
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  background-color: #353535;
-}
-
-.comment-box span {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.comment-box:last-child {
-  margin-bottom: 0;
-}
-.comment-info {
-  margin-bottom: 10px;
-  
-}
 .more-button {
   background-color: black;
   color: white; 
@@ -137,58 +106,4 @@
   font-size: 16px;
   font-weight: 100;
   transition: background-color 0.3s, color 0.3s;
-}
-
-.like-section {
-  margin-top: 10px;
-}
-
-
-
-.like-section button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-}
-
-.like-section button:hover i {
-  color: rgb(255, 1, 1);
-}
-
-.like-section button i {
-  color: rgb(255, 205, 205);
-  margin-right: 5px;
-}
-
-.fas.fa-heart.liked {
-  color: red; /* Change the color to red when liked */
-}
-
-.comment-button {
-  background-color: black;
-  border : none;
-  color : white;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.comment-container01 {
-  text-align: center;
-}
-
-.comment-box .edit-button {
-  background-color: black;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.comment-box .edit-button:hover {
-  background-color: gray;
 }

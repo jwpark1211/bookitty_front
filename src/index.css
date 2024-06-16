@@ -6,7 +6,9 @@ body {
   font-family: sans-serif;
   box-sizing: border-box;
   background: black;
+  background-size: cover;
 }
+
 
 *, *:before, *:after {
   box-sizing: inherit;
